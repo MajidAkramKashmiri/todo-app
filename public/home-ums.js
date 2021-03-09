@@ -78,9 +78,25 @@ app.controller("crudController",function($scope,$http)
                             {
                                 console.log("error");
                                 }
-                        );
+                                );
+                                $http({
+                                    method: 'GET',
+                                    url: '/user'
+                                  })
+                                  .then(function successCallback(response) 
+                                            {
+                                               console.log("userUpdated")
+                                                 $scope.usrData=response.data;
+                                            },
+                                            function errorCallback(response) 
+                                            {
+                                                    console.log("error");
+                                            }
+                                        
+                        
+                                                           );
         }
-            
+        
             
             
     }
@@ -127,6 +143,19 @@ app.controller("crudController",function($scope,$http)
                         console.log("error");
                         }
                   );
+                  $http({
+                    method: 'GET',
+                    url: '/user'
+                  })
+                  .then(function successCallback(response) 
+                            {
+                              $scope.usrData=response.data;
+                            },
+                            function errorCallback(response) 
+                            {
+                                    console.log("error");
+                            }
+                        );
                         //  alert('Clicked');
                         // $http.delete('/user/:id', $scope.usrData[$index]).then(function (response) {
                         //     console.log('Successfully Deleted')
