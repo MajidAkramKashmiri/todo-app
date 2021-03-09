@@ -10,7 +10,7 @@ const { O_CREAT } = require('constants');
 const user = new Datastore({ filename: 'collections/user.db', autoload: true });
 const session = new Datastore({ filename: 'collections/session.db', autoload: true });
 const todo = new Datastore({ filename: 'collections/todo.db', autoload: true });
-
+// Express Body Parser
 app.use(bodyParser.json());
 
 app.use('/', express.static(path.join(__dirname, 'public')))
