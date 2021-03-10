@@ -4,7 +4,12 @@ app.controller('homeController',function($scope){
         document.location.hash="#!/home-todo"
         
     }
+    $scope.todolist=function(){
+        alert("clicked");
+        document.location.hash="#!/home-ums"
+    }
 })
+
 
 
 

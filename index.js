@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
-const port = 2400;
+const port = 3300;
 const Datastore = require('nedb');
 const { O_CREAT } = require('constants'); 
 
@@ -115,6 +115,81 @@ app.delete('/user/:id', (req, res) => {
     res.send('Deleted Successfully!');
 })
 
+
+
+// TODo list 
+app.get('/todo', (req, res) => {
+    // res.send('hello world')
+    todo.find({},function(err,docs){
+       if(err){
+           console.log(err);
+       }
+       else{console.log(docs);
+       }   
+        res.send(docs);
+    });
+})
+app.get('/todo/:id', (req, res) => {
+    
+    // console.log(req.params);
+    let _id=req.params.id;
+
+    todo.find({_id},function(err,docs){
+        if(err){
+            console.log(err);
+        }
+        else{console.log(docs);
+        }   
+         res.send(docs);
+    });
+    
+    
+    
+    // res.send('hello world')
+})
+app.post('/todo', (req, res) => {
+    // res.send('hello world')
+    // console.log(req.body);
+    const data = req.body;
+    todo.insert(data, function (err, newDoc) {   // Callback is optional
+    if(err){
+        console.log(err);
+        
+    } 
+    else{
+        res.send(newDoc);
+    }
+    
+    
+    });
+        
+})
+app.put('/todo/:id', (req, res) => {
+    let _id=req.params.id;
+    todo.update({_id}, 
+        { $set: { title: req.body.title,description:req.body.description } }
+        , { multi: false }, function (err, numReplaced) {
+            console.log(numReplaced);
+            if(err || numReplaced==0){
+                res.json({  msg: 'Error while updating list' }, 500);
+            }
+            res.json({  msg: 'List updated successfully' }, 200);
+           
+        });
+             
+    
+    
+    
+})
+app.delete('/todo/:id', (req, res) => {
+    let _id=req.params.id;
+    todo.remove({ _id }, function (err, numRemoved) {
+    });
+    res.send('Deleted Successfully!');
+})
+
+
+
 app.listen(port, () => {
     console.log(`Angular app listening at http://localhost:${port}`);   
 });
@@ -125,29 +200,31 @@ app.listen(port, () => {
 
 
  
-// user.loadDatabase(function (err) {    // Callback is optional
+// todo.loadDatabase(function (err) {    
+//    // Callback is optional
 
-//     var userObj = [{ 
-//         username: 'majid', 
-//         password: 'test',
+//     var todoList = [{ 
+//         title: 'study', 
+//         description: 'Chapter2 topic no 3',
 //     },
 //     {
-//         username: 'moazam', 
-//         password: '2345',
+//         title: 'Sports', 
+//         description: 'Football Match at 7:30 ',
    
 //     },
 //     {
-//         username: 'javad', 
-//         password: 'dora',
+//         title: 'Extra', 
+//         description: 'buy the grocery etc',
    
 //     }
 
 
 
-// ];
+//  ];
+
  
-   // user.insert(userObj, function (err, newDoc) {   // Callback is optional
-   // });
+//     todo.insert(todoList, function (err, newDoc) {   // Callback is optional
+//     });});
   //  user.find({},function(err,docs){
     //console.log(docs);
     //});

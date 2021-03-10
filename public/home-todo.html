@@ -1,5 +1,7 @@
 <div ng-include="'nav.html'"></div>
-<h1>User Management System</h1>
+<div ng-controller="homeController">
+
+</div>
 <style>
     .tableBoundary{
         padding:3px;
@@ -8,39 +10,40 @@
         border-color:#f79646 #ccc;
     }
 </style>
-<section ng-controller="crudController">
+<h1>ToDoList</h1>
+<div ng-controller="todocontroller">
 <table>
     <tr>
-        <td><input type="text"   ng-model="data.username"    placeholder="Name">    </td>
-        <td><input type="password"   ng-model="data.password"     placeholder="Password">     </td>
-        <!-- <td><input type="text"   ng-model="data.address" placeholder="address"> </td> -->
-        <td><input type="button" ng-click="addUser()" value="Create">  </td>
-        <td><input type="button" ng-click="updateUser()" value="Update">  </td>
-        
-    </tr>
-    
+        <td> <input type="text" ng-model="list.title" placeholder="title"> {{list.title}} <br></td>
+        <td> <input type="text" ng-model="list.description" placeholder="description">{{list.description}} <br></td> 
+        <td><input type="button" ng-click="addTodo()" value="CreateNew">  </td>
+        <td><input type="button" ng-click="updateTodo()" value="Update">  </td>
+       
+     </tr>
+     
+     
 </table>
+
 <table class="tableBoundary">
     <thead>
         <th>Index</th>
-        <th>Name</th>
-        <th>Password</th>
-        <th>UserID</th>
-        <th>View</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Id</th>
         <th>Edit</th>
         <th>Delete</th>
+   </thead>
+
+
+    <tr class="tableBoundary" ng-repeat="data in todoListData">
+    <td class="tableBoundary" >{{$index}}</td>
    
-   
-       </thead>
- <tr class="tableBoundary" ng-repeat="data in usrData">
-   <td class="tableBoundary" >{{$index}}</td>
-   
-   <td class="tableBoundary" >{{data.username}}</td>
-   <td class="tableBoundary" >{{data.password}}</td>
+   <td class="tableBoundary" >{{data.title}}</td>
+   <td class="tableBoundary" >{{data.description}}</td>
    <td class="tableBoundary" >{{data._id}}</td>
-   <td class="tableBoundary" > 
+   <!-- <td class="tableBoundary" > 
     <input type="button" name="" ng-click="view()" value="view">
-</td>
+</td> -->
 
    <td class="tableBoundary" > 
        <input type="button" name="" ng-click="edit(data._id,$index)" value="edit">
@@ -52,4 +55,7 @@
 
  </tr>
 </table>
-</section>
+
+
+
+</div>

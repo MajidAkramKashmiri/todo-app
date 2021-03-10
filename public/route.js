@@ -15,6 +15,10 @@ app.config(function($routeProvider) {
     $routeProvider.when("/home-todo", {
         templateUrl : "home-todo.html"
     });
+    $routeProvider.when("/home-ums", {
+        templateUrl : "home-ums.html"
+    });
+
 });
 app.controller('loginController',function($scope,$http){
     
