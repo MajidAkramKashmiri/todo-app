@@ -1,4 +1,5 @@
 var app = angular.module("myApp", ["ngRoute"]);
+
 app.config(function($routeProvider) {
     $routeProvider.when("/", {
         template : "Root"
@@ -9,8 +10,6 @@ app.config(function($routeProvider) {
     $routeProvider.when("/home-user", {
         templateUrl : "home-user.html",
         controller:"homeController"
-        
-        
     });
     $routeProvider.when("/home-todo", {
         templateUrl : "home-todo.html"
@@ -20,9 +19,10 @@ app.config(function($routeProvider) {
     });
 
 });
-app.controller('loginController',function($scope,$http){
-    
-    $scope.checkLogin=function(){
+
+app.controller('loginController', function($scope,$http) {
+
+    $scope.checkLogin = function() {
     let username=$scope.Username;
     let password=$scope.Password;
         $http.post('/api/auth/login', { username: username, password: password })
@@ -33,7 +33,7 @@ app.controller('loginController',function($scope,$http){
             .catch(err => {
                 console.log('catch => ', err);
                 alert(err);
-            })
+            });
     }
 })
 
