@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
-const port = 3300;
+const port = 4300;
 const Datastore = require('nedb');
 const { O_CREAT } = require('constants'); 
 
@@ -18,7 +18,7 @@ app.use('/', express.static(path.join(__dirname, 'public')))
 // Authentication
 app.post('/api/auth/login', (req, res) => {
     // 1 - Query from DB username/password
-    user.find(req.body,function(err,docs){
+    user.find(req.body, function(err, docs) { 
         if (err) {
             res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);         
         }
@@ -48,39 +48,31 @@ app.put('/api/auth/logout', (req, res) => {
 app.get('/user', (req, res) => {
     // res.send('hello world')
     user.find({},function(err,docs){
-       if(err){
-           console.log(err);
-       }
-       else{console.log(docs);
-       }   
-        res.send(docs);
+    if (err) {
+        res.json({ msg: 'Internal Server Error' }, 500);
+    }
+    else { 
+    console.log(docs);
+    }   
+    res.send(docs);
     });
 })
 app.get('/user/:id', (req, res) => {
-    
-    // console.log(req.params);
-    let _id=req.params.id;
-
-    user.find({_id},function(err,docs){
-        if(err){
-            console.log(err);
+let _id = req.params.id;
+user.find({_id}, function(err, docs) {
+        if (err) {
+            res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
         }
-        else{console.log(docs);
+        else { console.log(docs);
         }   
          res.send(docs);
-    });
-    
-    
-    
-    // res.send('hello world')
+});    
 })
 app.post('/user', (req, res) => {
-    // res.send('hello world')
-    // console.log(req.body);
     const data = req.body;
-    user.insert(data, function (err, newDoc) {   // Callback is optional
+    user.insert(data, function (err, newDoc) {   
     if(err){
-        console.log(err);
+        res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
         
     } 
     else{
@@ -117,43 +109,40 @@ app.delete('/user/:id', (req, res) => {
 
 
 
-// TODo list 
-app.get('/todo', (req, res) => {
-    // res.send('hello world')
-    todo.find({},function(err,docs){
-       if(err){
-           console.log(err);
-       }
-       else{console.log(docs);
-       }   
+// Todo routes
+app.get('/todo/:userId', (req, res) => {
+    
+    let userId = req.params.userId
+    todo.find({userId}, function(err,docs) {
+        if (err) {
+            res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
+        }
+        else {
+            console.log(docs);
+        }   
+        res.send(docs);
+    });
+});
+app.get('/todo/:userId/:id', (req, res) => {
+    let _id=req.params.id;
+    todo.find({_id}, function(err,docs) {
+        if (err) {
+            res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
+        }
+        else {
+            console.log(docs);
+        }   
         res.send(docs);
     });
 })
-app.get('/todo/:id', (req, res) => {
+app.post('/todo/:userId', (req, res) => {
     
-    // console.log(req.params);
-    let _id=req.params.id;
-
-    todo.find({_id},function(err,docs){
-        if(err){
-            console.log(err);
-        }
-        else{console.log(docs);
-        }   
-         res.send(docs);
-    });
-    
-    
-    
-    // res.send('hello world')
-})
-app.post('/todo', (req, res) => {
-    // res.send('hello world')
-    // console.log(req.body);
-    const data = req.body;
-    todo.insert(data, function (err, newDoc) {   // Callback is optional
+    var data = req.body;
+    data.userId = req.params.userId;
+    todo.insert(data, function (err, newDoc) {   
     if(err){
-        console.log(err);
+        res.json({  msg: 'Error while creating list' }, 500);
+        
         
     } 
     else{
@@ -164,7 +153,7 @@ app.post('/todo', (req, res) => {
     });
         
 })
-app.put('/todo/:id', (req, res) => {
+app.put('/todo/:userId/:id', (req, res) => {
     let _id=req.params.id;
     todo.update({_id}, 
         { $set: { title: req.body.title,description:req.body.description } }
@@ -181,11 +170,15 @@ app.put('/todo/:id', (req, res) => {
     
     
 })
-app.delete('/todo/:id', (req, res) => {
+app.delete('/todo/:userId/:id', (req, res) => {
     let _id=req.params.id;
     todo.remove({ _id }, function (err, numRemoved) {
+        if(err ){
+            res.json({  msg: 'Error while deleting list' }, 500);
+        }   
+    res.json({  msg: 'List deleted successfully' }, 200);
     });
-    res.send('Deleted Successfully!');
+    
 })
 
 
@@ -194,6 +187,18 @@ app.listen(port, () => {
     console.log(`Angular app listening at http://localhost:${port}`);   
 });
   
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

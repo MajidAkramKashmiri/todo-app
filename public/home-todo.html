@@ -1,7 +1,8 @@
-<div ng-include="'nav.html'"></div>
-<div ng-controller="homeController">
-
+<div ng-include = "'nav.html'">
+    <div ng-controller = "homeController">
+    </div>
 </div>
+
 <style>
     .tableBoundary{
         padding:3px;
@@ -11,51 +12,31 @@
     }
 </style>
 <h1>ToDoList</h1>
-<div ng-controller="todocontroller">
-<table>
-    <tr>
-        <td> <input type="text" ng-model="list.title" placeholder="title"> {{list.title}} <br></td>
-        <td> <input type="text" ng-model="list.description" placeholder="description">{{list.description}} <br></td> 
-        <td><input type="button" ng-click="addTodo()" value="CreateNew">  </td>
-        <td><input type="button" ng-click="updateTodo()" value="Update">  </td>
-       
-     </tr>
-     
-     
-</table>
-
-<table class="tableBoundary">
-    <thead>
-        <th>Index</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Id</th>
-        <th>Edit</th>
-        <th>Delete</th>
-   </thead>
-
-
-    <tr class="tableBoundary" ng-repeat="data in todoListData">
-    <td class="tableBoundary" >{{$index}}</td>
-   
-   <td class="tableBoundary" >{{data.title}}</td>
-   <td class="tableBoundary" >{{data.description}}</td>
-   <td class="tableBoundary" >{{data._id}}</td>
-   <!-- <td class="tableBoundary" > 
-    <input type="button" name="" ng-click="view()" value="view">
-</td> -->
-
-   <td class="tableBoundary" > 
-       <input type="button" name="" ng-click="edit(data._id,$index)" value="edit">
-   </td>
-   <td class="tableBoundary" > 
-       <input type="button" name="" ng-click="delete(data._id)" value="delete">
-   </td>
-   
-
- </tr>
-</table>
-
-
-
+<div ng-controller = "todocontroller">
+    <table>
+        <tr>
+            <td> <input type = "text" ng-model = "list.title" placeholder = "title"> {{list.title}} <br> </td>
+            <td> <input type = "text" ng-model = "list.description" placeholder = "description">{{list.description}} <br> </td> 
+            <td> <input type = "button" ng-click = "addTodo()" value = "CreateNew">  </td>
+            <td> <input type = "button" ng-click = "updateTodo()" value = "Update">  </td>
+        </tr>
+    </table>
+    <table class = "tableBoundary">
+        <thead>
+            <th> Index </th>
+            <th> Title </th>
+            <th> Description </th>
+            <th> Id </th>
+            <th> Edit </th>
+            <th> Delete </th>
+        </thead>
+    <tr class = "tableBoundary" ng-repeat = "data in todoListData">
+            <td class = "tableBoundary" > {{$index}} </td>
+            <td class = "tableBoundary" > {{data.title}}</td>
+            <td class = "tableBoundary" > {{data.description}}</td>
+            <td class = "tableBoundary" > {{data._id}}</td>
+            <td class = "tableBoundary" > <input type = "button" name = "" ng-click = "edit(data._id,$index)" value = "edit" > </td>
+            <td class = "tableBoundary" > <input type = "button" name = "" ng-click = "delete(data._id)" value = "delete" > </td>
+        </tr>
+    </table>
 </div>
