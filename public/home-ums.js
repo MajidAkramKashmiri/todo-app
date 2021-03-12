@@ -1,4 +1,13 @@
 app.controller("crudController", function($scope, $http){
+
+    $scope.userManagement = function(){
+    document.location.hash="#!/home-ums"
+    }
+    $scope.todolist = function(){
+    document.location.hash = "#!/home-todo"
+    }
+
+
     $scope.data={
         username:"",
         password:"",

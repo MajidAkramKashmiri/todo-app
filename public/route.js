@@ -32,7 +32,7 @@ app.controller('loginController',function($scope,$http){
             })
             .catch(err => {
                 console.log('catch => ', err);
-                alert(err);
+                alert(err.data.msg);
             })
     }
 })

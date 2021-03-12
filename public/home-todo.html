@@ -1,7 +1,4 @@
-<div ng-include = "'nav.html'">
-    <div ng-controller = "homeController">
-    </div>
-</div>
+
 
 <style>
     .tableBoundary{
@@ -11,8 +8,11 @@
         border-color:#f79646 #ccc;
     }
 </style>
-<h1>ToDoList</h1>
-<div ng-controller = "todocontroller">
+
+<div ng-controller =  "todocontroller">
+    <div ng-include = "'nav.html'">
+    </div>
+    <h1> ToDoList </h1>
     <table>
         <tr>
             <td> <input type = "text" ng-model = "list.title" placeholder = "title"> {{list.title}} <br> </td>
