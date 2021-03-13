@@ -1,121 +1,119 @@
-app.controller("crudController", function($scope, $http){
-
-    $scope.userManagement = function(){
-    document.location.hash="#!/home-ums"
+app.controller("crudController", function ($scope, $http) {
+    $scope.userManagement = function () {
+        document.location.hash = "#!/home-ums"
     }
     $scope.todolist = function(){
     document.location.hash = "#!/home-todo"
     }
-
-
-    $scope.data={
-        username:"",
-        password:"",
+    $scope.data = {
+        username: "",
+        password: "",
     }
     $http({
         method: 'GET',
-        url: '/user'
+        url: '/user',
+        headers : { token: localStorage.getItem('token') }
     }) 
-        .then(function successCallback(response){
-            console.log(response.data);   
-            $scope.usrData=response.data;
-                
-        },
-        function errorCallback(response){
+    .then(function successCallback (response) {
+        $scope.usrData = response.data;
+    },
+    function errorCallback (response) {
         console.log("error");
-        });
-    
-    $scope.addUser = function(){
-        console.log( $scope.data );
-        $http.post('/user', $scope.data)
-            .then(function successCallback(response){
-                //console.log(response.data);   
-                // $scope.usrData=response.data;
-                //console.log(usrData);
+    });
+    $scope.addUser = function () {
+        $http({
+            method: 'POST',
+            url: '/user', 
+            data: $scope.data,
+            headers: {token: localStorage.getItem('token')}
+        })
+        .then(function successCallback (response) {
             },
-            function errorCallback(response) {
+            function errorCallback (response) {
             console.log("error");
-            });
+            }
+        );
         $http({
             method: 'GET',
-            url: '/user'
+            url: '/user',
+            headers: { token : localStorage.getItem('token')}
         })
-            .then(function successCallback(response) {
-                $scope.usrData=response.data;
+        .then(function successCallback (response) {
+            $scope.usrData = response.data;
             },
-            function errorCallback(response) {
-                console.log("error");
+            function errorCallback (response) {
+            console.log("error");
             }
-            );
+        );
     }
                 
-    $scope.edit=function(id,index){
-        alert('clicked');
-        console.log('index is ' + index);  
-        $scope.data.username=$scope.usrData[index].username;
-        $scope.data.password=$scope.usrData[index].password;
-        $scope.updateUser=function(){
-            alert('clicked');
+    $scope.edit = function (id, index) {
+        $scope.data.username = $scope.usrData[index].username;
+        $scope.data.password = $scope.usrData[index].password;
+        $scope.updateUser = function () {
             $http({
                 method: 'PUT',
                 url: '/user/'+id,
-                data:$scope.data
+                data: $scope.data,
+                headers: { token : localStorage.getItem('token') }
             })
-            .then(function successCallback(response) {
-                //   $scope.usrData=response.data;  
-            },
-            function errorCallback(response) {
+            .then(function successCallback (response) {
+                },
+                function errorCallback (response) {
                 console.log("error");
-            });
+                }
+            );
             $http({
                 method: 'GET',
-                url: '/user'
+                url: '/user',
+                headers: { token: localStorage.getItem('token') }
             })
             .then(function successCallback(response) {
-                console.log("userUpdated")
-                $scope.usrData=response.data;
-            },
-            function errorCallback(response) {
+                $scope.usrData = response.data;
+                },
+                function errorCallback(response) {
                 console.log("error");
-            });
+                }
+            );
         }
     }
-
-    $scope.view=function(){
-        alert('clicked');
+    $scope.view = function () {
         $http({
             method: 'GET',
-            url: '/user/:id'
-        })
-            .then(function successCallback(response) {
-                console.log(response.data);   
+            url: '/user/:id',
+            headers: { token: localStorage.getItem('token') }
+         })
+        .then(function successCallback (response) {
+            console.log(response.data);   
             }, 
-            function errorCallback(response) {
-                console.log("error");
+            function errorCallback (response) {
+            console.log("error");
             });
     }
-    
-    $scope.delete=function(id){
-        console.log(id); 
+    $scope.delete = function (id) {
         $http({
             method: 'DELETE',
-            url: '/user/'+id
+            url: '/user/'+id,
+            headers: {token: localStorage.getItem('token')}
         })
-            .then(function successCallback(response) {
-                console.log('deleted successfully');
+        .then(function successCallback (response) {
+            console.log('deleted successfully');
             },
-            function errorCallback(response) {
+            function errorCallback (response) {
                 console.log("error");
-            });
+            }
+        );
         $http({
             method: 'GET',
-            url: '/user'
+            url: '/user',
+            headers: {token: localStorage.getItem('token')}
         })
-            .then(function successCallback(response) {
-                $scope.usrData = response.data;
+        .then(function successCallback  (response) {
+            $scope.usrData = response.data;
             },
             function errorCallback(response) {
-                console.log("error");
-            });
+            console.log("error");
+            }
+        );
     }
 });

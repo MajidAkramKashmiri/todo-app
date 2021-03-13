@@ -2,43 +2,55 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
-const port = 4300;
+const port = 4400;
 const Datastore = require('nedb');
 const { O_CREAT } = require('constants');
 
-// DB Collections
 const user = new Datastore({ filename: 'collections/user.db', autoload: true });
 const session = new Datastore({ filename: 'collections/session.db', autoload: true });
 const todo = new Datastore({ filename: 'collections/todo.db', autoload: true });
-// Express Body Parser
 app.use(bodyParser.json());
-
-
-// Why we are having unnecessary console.log(). unnecessary logging reduce the performance of application ?
-// Why we are still having the response as a plain text?
-// Still there were many unformated lines...
-
 app.use('/', express.static(path.join(__dirname, 'public')))
 
+var myLogger = function (req, res, next) {
+    if (req.headers.token) {
+        let token = req.headers.token
+        session.find({ token }, function(err, docs) {
+            if (err) {
+                res.json({ msg: "Unauthorize access" }, 401);
+            }
+            if (docs) {
+                next();        
+            }
+            else {
+                res.json({ msg: "Unauthorize access" }, 401);        
+            }
+        });
+    }
+    else {
+        res.json({ msg: "Unauthorize access" }, 401);
+    }
+    
+}
 // Authentication
 app.post('/api/auth/login', (req, res) => {
-    // 1 - Query from DB username/password
-    user.find(req.body, function(err, docs) {
+    user.find(req.body, function (err, docs) {
         if (err) {
             res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
         }
-        // 2 - If found, Generate a token and Create an entry in session table with user id
         if (docs.length) {
             const token = makeid(15);
             session.insert([{ userId: docs[0]._id, token: token }], function (err, newDocs) {
                 if (err) {
                     res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
                 }
-                // 3 - Return a response with successful message
-                res.json({ user: docs[0], token: token, msg: 'Successfully Logged-in' }, 200);
-                // res.send('Authentication Login')
+                console.log('Value of generated token is '+ token);
+                res.header({ "token": token });
+                console.log('Value of generated res.header  is '+ res);
+                res.json({ user: newDocs[0], msg: 'Successfully Logged-in' }, 200);
             });
-        } else {
+        } 
+        else {
             res.json({ user: null, token: null, msg: 'Invalid Username/Password' }, 400);
         }
     })
@@ -46,48 +58,44 @@ app.post('/api/auth/login', (req, res) => {
 app.put('/api/auth/logout', (req, res) => {
     res.send('Authentication Logout')
 })
-
 // User Management
-app.get('/user', (req, res) => {
-    // res.send('hello world')
+app.get('/user', myLogger, (req, res) => {
     user.find({}, function(err,docs) {
         if (err) {
             res.json({ msg: 'Internal Server Error' }, 500);
         }
         else {
-            res.send(docs);   
+            res.json(docs, 200);   
         }
-        
     });
 })
-app.get('/user/:id', (req, res) => {
+app.get('/user/:id', myLogger, (req, res) => {
     let _id = req.params.id;
-    user.find({_id}, function(err, docs) {
+    user.find({ _id }, function (err, docs) {
         if (err) {
             res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
         }
         else {
-            console.log(docs);
+            res.json(docs, 200);
         }
-        res.send(docs);
     });
 })
-app.post('/user', (req, res) => {
+app.post('/user', myLogger, (req, res) => {
     const data = req.body;
     user.insert(data, function (err, newDoc) {
         if (err) {
             res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
         }
         else {
-            res.send(newDoc);
+            res.json(newDoc, { msg:'User created successfully' },200);
         }
     });
 })
-app.put('/user/:id', (req, res) => {
+app.put('/user/:id', myLogger, (req, res) => {
     let _id=req.params.id;
     user.update(
-        {_id},
-        { $set: { username: req.body.username,password:req.body.password } },
+        { _id },
+        { $set: { username: req.body.username, password:req.body.password } },
         { multi: false },
         function (err, numReplaced) {
             console.log(numReplaced);
@@ -98,7 +106,7 @@ app.put('/user/:id', (req, res) => {
         }
     );
 });
-app.delete('/user/:id', (req, res) => {
+app.delete('/user/:id', myLogger, (req, res) => {
     let _id = req.params.id;
     user.remove(
         { _id },
@@ -107,39 +115,35 @@ app.delete('/user/:id', (req, res) => {
             res.json({ msg: 'Error while deleting list' }, 500);
             }
             res.json({ msg: 'List deleted successfully' }, 200);    
-
         }
     );
-     // Why its not inside callback? and why sending response in text instead of JSON
 });
 // Todo routes
-app.get('/todo/:userId', (req, res) => {
-    let userId = req.params.userId
-    todo.find({userId}, function(err,docs) {
+app.get('/todo/:userId', myLogger, (req, res) => {
+    console.log("Welcome")
+    let userId = req.params.userId;
+    todo.find({ userId }, function(err,docs) {
         if (err) {
             res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
         }
         else {
+            console.log(docs)
             res.json(docs,{ msg: 'List found successfully' }, 200);
         }
-        // res.send(docs);
     });
 });
-app.get('/todo/:userId/:id', (req, res) => {
+app.get('/todo/:userId/:id', myLogger, (req, res) => {
     let _id = req.params.id;
-    todo.find({_id}, function(err,docs) {
+    todo.find({ _id }, function(err,docs) {
         if (err) {
             res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
         }
         else {
             res.json(docs,{ msg: 'List found successfully' }, 200);
         }
-       
-        // res.send(docs); // why response type is not JSON?
     });
 })
-app.post('/todo/:userId', (req, res) => {
-
+app.post('/todo/:userId', myLogger, (req, res) => {
     var data = req.body;
     data.userId = req.params.userId;
     todo.insert(data, function (err, newDoc) {
@@ -147,26 +151,25 @@ app.post('/todo/:userId', (req, res) => {
             res.json({  msg: 'Error while creating list' }, 500);
         }
         else {
-            res.json(newDoc,{ msg: 'List created successfully' }, 200);
+            res.json(newDoc, { msg: 'List created successfully' }, 200);
         }
     });
 });
-app.put('/todo/:userId/:id', (req, res) => {
-    let _id=req.params.id;
+app.put('/todo/:userId/:id', myLogger, (req, res) => {
+    let _id = req.params.id;
     todo.update(
-        {_id},
-        { $set: { title: req.body.title,description:req.body.description } },
+        { _id },
+        { $set: { title: req.body.title, description:req.body.description } },
         { multi: false },
         function (err, numReplaced) {
-            console.log(numReplaced);
-            if (err || numReplaced==0) {
+            if (err || numReplaced == 0) {
                 res.json({ msg: 'Error while updating list' }, 500);
             }
             res.json({ msg: 'List updated successfully' }, 200);
         }
     );
 });
-app.delete('/todo/:userId/:id', (req, res) => {
+app.delete('/todo/:userId/:id', myLogger, (req, res) => {
     let _id = req.params.id;
     todo.remove(
         { _id },
@@ -178,86 +181,18 @@ app.delete('/todo/:userId/:id', (req, res) => {
         }
     );
 })
-
 // Stating Express JS server
 app.listen(port, () => {
     console.log(`Angular app listening at http://localhost:${port}`);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// todo.loadDatabase(function (err) {
-//    // Callback is optional
-
-//     var todoList = [{
-//         title: 'study',
-//         description: 'Chapter2 topic no 3',
-//     },
-//     {
-//         title: 'Sports',
-//         description: 'Football Match at 7:30 ',
-
-//     },
-//     {
-//         title: 'Extra',
-//         description: 'buy the grocery etc',
-
-//     }
-
-
-
-//  ];
-
-
-//     todo.insert(todoList, function (err, newDoc) {   // Callback is optional
-//     });});
-  //  user.find({},function(err,docs){
-    //console.log(docs);
-    //});
-    //user.update({username:"javad"},{username:"akhnus"},{},function(err,numReplaced){
-      //  console.log(numReplaced);
-    //});
-//user.update({ username: 'moazam' }, { $set: { username: 'Ashraf' } }, { multi: true }, function (err, numReplaced) {
-
-//});
-
-//user.find({},function(err,docs){
-  //  console.log(docs);
-    //});
-
-    // user.remove({ _id: 'BQsjylM5cDnBdyFO' }, {}, function (err, numRemoved) {
-    //     // numRemoved = 1
-    //   });
-    //   user.find({},function(err,docs){
-    //     console.log(docs);
-    //     });
-
-
-    // });
-    function makeid(length) {
-        var result           = '';
-        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        var charactersLength = characters.length;
-        for ( var i = 0; i < length; i++ ) {
-           result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
-        return result;
-     }
+function makeid(length) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
 
 
