@@ -35,7 +35,7 @@
         <td class = "tableBoundary" > {{ data.username }} </td>
         <td class = "tableBoundary" > {{ data.password }} </td>
         <td class = "tableBoundary" > {{ data._id }} </td>
-        <td class = "tableBoundary" > <input type = "button" name = "" ng-click = "view()" value = "view" > </td>
+        <td class = "tableBoundary" > <input type = "button" name = "" ng-click = "view(data._id)" value = "view" > </td>
         <td class = "tableBoundary" > <input type = "button" name = "" ng-click = "edit(data._id,$index)" value = "edit" > </td>
         <td class = "tableBoundary" > <input type = "button" name = "" ng-click = "delete(data._id)" value = "delete" > </td>
         </tr>

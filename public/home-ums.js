@@ -1,4 +1,4 @@
-app.controller("crudController", function ($scope, $http) {
+app.controller("crudController", function ($scope, $http,UserService) {
     $scope.userManagement = function () {
         document.location.hash = "#!/home-ums"
     }
@@ -9,111 +9,45 @@ app.controller("crudController", function ($scope, $http) {
         username: "",
         password: "",
     }
-    $http({
-        method: 'GET',
-        url: '/user',
-        headers : { token: localStorage.getItem('token') }
-    }) 
-    .then(function successCallback (response) {
-        $scope.usrData = response.data;
-    },
-    function errorCallback (response) {
-        console.log("error");
-    });
+    UserService.get()
+        .then(response=>{
+            $scope.usrData=response;
+        }) 
     $scope.addUser = function () {
-        $http({
-            method: 'POST',
-            url: '/user', 
-            data: $scope.data,
-            headers: {token: localStorage.getItem('token')}
-        })
-        .then(function successCallback (response) {
-            },
-            function errorCallback (response) {
-            console.log("error");
-            }
-        );
-        $http({
-            method: 'GET',
-            url: '/user',
-            headers: { token : localStorage.getItem('token')}
-        })
-        .then(function successCallback (response) {
-            $scope.usrData = response.data;
-            },
-            function errorCallback (response) {
-            console.log("error");
-            }
-        );
+        UserService.create($scope.data)
+            .then(response=>{
+            }) 
+        UserService.get()
+            .then(response=>{
+             $scope.usrData=response;
+            })  
     }
-                
     $scope.edit = function (id, index) {
         $scope.data.username = $scope.usrData[index].username;
         $scope.data.password = $scope.usrData[index].password;
         $scope.updateUser = function () {
-            $http({
-                method: 'PUT',
-                url: '/user/'+id,
-                data: $scope.data,
-                headers: { token : localStorage.getItem('token') }
-            })
-            .then(function successCallback (response) {
-                },
-                function errorCallback (response) {
-                console.log("error");
-                }
-            );
-            $http({
-                method: 'GET',
-                url: '/user',
-                headers: { token: localStorage.getItem('token') }
-            })
-            .then(function successCallback(response) {
-                $scope.usrData = response.data;
-                },
-                function errorCallback(response) {
-                console.log("error");
-                }
-            );
+            UserService.update(id, $scope.data)
+                .then(response=>{
+                })    
+            UserService.get()
+                .then(response=>{
+                    $scope.usrData=response;
+                })  
         }
     }
-    $scope.view = function () {
-        $http({
-            method: 'GET',
-            url: '/user/:id',
-            headers: { token: localStorage.getItem('token') }
-         })
-        .then(function successCallback (response) {
-            console.log(response.data);   
-            }, 
-            function errorCallback (response) {
-            console.log("error");
-            });
+    $scope.view = function (id) {
+        UserService.getById(id)
+            .then(response=>{
+                console.log(response);
+            })
     }
     $scope.delete = function (id) {
-        $http({
-            method: 'DELETE',
-            url: '/user/'+id,
-            headers: {token: localStorage.getItem('token')}
-        })
-        .then(function successCallback (response) {
-            console.log('deleted successfully');
-            },
-            function errorCallback (response) {
-                console.log("error");
-            }
-        );
-        $http({
-            method: 'GET',
-            url: '/user',
-            headers: {token: localStorage.getItem('token')}
-        })
-        .then(function successCallback  (response) {
-            $scope.usrData = response.data;
-            },
-            function errorCallback(response) {
-            console.log("error");
-            }
-        );
+        UserService.delete(id)
+            .then(response=>{
+        })  
+        UserService.get()
+            .then(response=>{
+            $scope.usrData=response;
+            })   
     }
 });
