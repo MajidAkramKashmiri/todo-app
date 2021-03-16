@@ -1,117 +1,50 @@
-app.controller("todocontroller", function ($scope, $http) {
+app.controller("todocontroller", function ($scope, $http,todoListService) {
     $scope.userManagement = function () {
     document.location.hash = "#!/home-ums"
     }
     $scope.todolist = function () {
     document.location.hash = "#!/home-todo"
     }
-    var loginData = JSON.parse(localStorage.loginData);
     $scope.list = {
         title: "",
         description: ""
     };
-    $http({
-        method: 'GET',
-        url: '/todo/' + loginData.user.userId,
-        headers: { token: localStorage.getItem('token') }
-    })
-    .then(
-        function successCallback (response) {
-            $scope.todoListData = response.data;
-        },
-        function errorCallback (response) {
-            console.log("error");
-        }
-    );
+    todoListService.get()
+        .then(response=>{
+            $scope.todoListData = response;
+         })
     $scope.addTodo = function () {
-        $http({
-            method: 'POST',
-            url: '/todo/' + loginData.user.userId,
-            data: $scope.list,
-            headers: { token: localStorage.getItem('token') }
-        })
-        .then(
-            function successCallback (response) {  
-            },
-            function errorCallback (response) {
-                console.log("error");
-            }
-        );
-        $http({
-            method: 'GET',
-            url: '/todo/'+ loginData.user.userId,
-            headers: { token: localStorage.getItem('token') }
-        })
-        .then(
-            function successCallback(response) {
-                $scope.todoListData = response.data;
-            },
-            function errorCallback(response) {
-                console.log("error");
-            }
-        );
+        todoListService.create($scope.list)
+            .then(response=>{
+                $scope.todoListData = response;
+            })
+        todoListService.get()
+            .then(response=>{
+                $scope.todoListData = response;
+            })
     }
-    $scope.edit = function (id,index) {
+    $scope.edit = function (id, index) {
         $scope.list.title = $scope.todoListData[index].title;
         $scope.list.description = $scope.todoListData[index].description;
         $scope.updateTodo = function () {
-            $http({
-                method: 'PUT',
-                url: `/todo/${ loginData.user.userId }/${ id }`,
-                data: $scope.list,
-                headers: { token: localStorage.getItem('token') }
-            })
-            .then(
-                function successCallback (response) {
-                },
-                function errorCallback (response) {
-                    console.log("error");
-                }
-            );
-            $http({ 
-                method: 'GET',
-                url: '/todo/'+ loginData.user.userId,
-                headers: {  token: localStorage.getItem('token')   }
-            })
-            .then(
-                function successCallback (response) {
-                    console.log("List Updated")
-                    $scope.todoListData = response.data;
-                },
-                function errorCallback (response) {
-                    console.log("error");
-                }
-            );
+            todoListService.update(id,$scope.list)
+                .then(response=>{
+                    console.log("List updated successfully");
+                })
+            todoListService.get()
+                .then(response=>{
+                    $scope.todoListData=response;
+                })  
         }
     }
-
     $scope.delete = function (id) {
-        console.log(id);
-        $http ({
-            method: 'DELETE',
-            url:`/todo/${ loginData.user._id }/${ id }`,
-            headers: { token : localStorage.getItem('token') }
-        })
-        .then(
-            function successCallback (response) {
-                console.log('deleted successfully');
-            },
-            function errorCallback (response) {
-                console.log("error");
-            }
-        );
-        $http({  
-            method: 'GET',
-            url: `/todo/${loginData.user.userId}`,
-            headers: { token : localStorage.getItem('token') }
-        })
-        .then(
-            function successCallback (response) {
-                $scope.todoListData=response.data;
-            },
-            function errorCallback(response) {
-                console.log("error");
-            }
-        );
+        todoListService.delete(id)
+            .then(
+                console.log("deleted successfully")
+            )
+        todoListService.get()
+            .then(response=>{
+                $scope.todoListData=response;
+            })
     }
 });

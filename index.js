@@ -122,12 +122,14 @@ app.delete('/user/:id', myLogger, (req, res) => {
 app.get('/todo/:userId', myLogger, (req, res) => {
     console.log("Welcome")
     let userId = req.params.userId;
+    console.log(userId);
     todo.find({ userId }, function(err,docs) {
         if (err) {
+            console.log("error");
             res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
         }
         else {
-            console.log(docs)
+            console.log(docs);
             res.json(docs,{ msg: 'List found successfully' }, 200);
         }
     });
@@ -146,6 +148,7 @@ app.get('/todo/:userId/:id', myLogger, (req, res) => {
 app.post('/todo/:userId', myLogger, (req, res) => {
     var data = req.body;
     data.userId = req.params.userId;
+    console.log(data.userid);
     todo.insert(data, function (err, newDoc) {
         if (err) {
             res.json({  msg: 'Error while creating list' }, 500);
