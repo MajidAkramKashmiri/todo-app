@@ -17,18 +17,13 @@ app.config(function ($routeProvider) {
         templateUrl : "home-ums.html"
     });
 });
-app.controller('loginController', function($scope,$http) {
+app.controller('loginController', function($scope,$http,loginService) {
     $scope.checkLogin = function() {
         let username = $scope.Username;
         let password = $scope.Password;
-        $http.post('/api/auth/login', { username: username, password: password })
-        .then(res => {
-            localStorage.loginData = JSON.stringify(res.data);
-            localStorage.setItem = JSON.stringify(res.headers.token);
-            document.location.hash = "#!/home-user"
-        })
-        .catch(err => {
-            alert(err.data.msg);
-        })
+        loginService.post(username,password)
+            .then(response=>{
+                $scope.usrData=response;
+            }) 
     }
 })
