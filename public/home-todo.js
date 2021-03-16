@@ -12,7 +12,7 @@ app.controller("todocontroller", function ($scope, $http) {
     };
     $http({
         method: 'GET',
-        url: '/todo/' + loginData.user._id,
+        url: '/todo/' + loginData.user.userId,
         headers: { token: localStorage.getItem('token') }
     })
     .then(
@@ -26,7 +26,7 @@ app.controller("todocontroller", function ($scope, $http) {
     $scope.addTodo = function () {
         $http({
             method: 'POST',
-            url: '/todo/' + loginData.user._id,
+            url: '/todo/' + loginData.user.userId,
             data: $scope.list,
             headers: { token: localStorage.getItem('token') }
         })
@@ -39,7 +39,7 @@ app.controller("todocontroller", function ($scope, $http) {
         );
         $http({
             method: 'GET',
-            url: '/todo/'+ loginData.user._id,
+            url: '/todo/'+ loginData.user.userId,
             headers: { token: localStorage.getItem('token') }
         })
         .then(
@@ -57,7 +57,7 @@ app.controller("todocontroller", function ($scope, $http) {
         $scope.updateTodo = function () {
             $http({
                 method: 'PUT',
-                url: `/todo/${ loginData.user._id }/${ id }`,
+                url: `/todo/${ loginData.user.userId }/${ id }`,
                 data: $scope.list,
                 headers: { token: localStorage.getItem('token') }
             })
@@ -70,7 +70,7 @@ app.controller("todocontroller", function ($scope, $http) {
             );
             $http({ 
                 method: 'GET',
-                url: '/todo/'+ loginData.user._id,
+                url: '/todo/'+ loginData.user.userId,
                 headers: {  token: localStorage.getItem('token')   }
             })
             .then(
@@ -102,7 +102,7 @@ app.controller("todocontroller", function ($scope, $http) {
         );
         $http({  
             method: 'GET',
-            url: `/todo/${loginData.user._id}`,
+            url: `/todo/${loginData.user.userId}`,
             headers: { token : localStorage.getItem('token') }
         })
         .then(
