@@ -1,20 +1,20 @@
-var app = angular.module("myApp", ["ngRoute"]);
+var app = angular.module("myApp", ["ngRoute","ui.bootstrap"]);
 app.config(function ($routeProvider) {
     $routeProvider.when("/", {
         template : "Root"
     });
     $routeProvider.when("/auth-login", {
-        templateUrl : "auth-login.html"
+        templateUrl : "html/auth-login.html"
     });
     $routeProvider.when("/home-user", {
-        templateUrl : "home-user.html",
+        templateUrl : "html/home-user.html",
         controller: "homeController"
     });
     $routeProvider.when("/home-todo", {
-        templateUrl : "home-todo.html"
+        templateUrl : "html/home-todo.html"
     });
     $routeProvider.when("/home-ums", {
-        templateUrl : "home-ums.html"
+        templateUrl : "html/home-ums.html"
     });
 });
 app.controller('loginController', function($scope,$http,loginService) {
