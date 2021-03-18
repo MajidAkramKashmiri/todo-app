@@ -1,94 +1,43 @@
+
+
 <style>
     .tableBoundary{
-        padding: 3px;
-        border-width: 1px;
-        border-style: solid;
-        border-color: #f79646 #ccc;
-    }
-    .color{
-        color:black;
+    padding: 3px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #f79646 #ccc;
     }
 </style>
-<section ng-controller="crudController" >
-    <div ng-include="'html/nav.html'" >
+<section ng-controller = "crudController" >
+    <div ng-include = "'nav.html'" >
     </div>
-    <h1 class="color"> User Management System </h1>
-    <div style="margin-left: 10px;">
-        <form
-            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-                <input 
-                type="text"  
-                ng-model = "data.username" 
-                class="form-control bg-light border-0 small" 
-                placeholder="Name"
-                aria-label="Password" 
-                aria-describedby="basic-addon2">
-                <input 
-                type="password" 
-                ng-model = "data.password"  
-                class="form-control bg-light border-0 small" 
-                placeholder="Password"
-                aria-label="Name" 
-                aria-describedby="basic-addon2">
-            </div> 
-            <br>
-            <br>
-            <button class="btn btn-primary" type="button" ng-click="addUser()" value="Create">Create</button>
-            <button class="btn btn-primary" type="button" ng-click="updateUser()" value="Update" >Update</button>
-        </form>
-        <br>
-        <br>
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">User Data</h6>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th> Index </th>
-                                <th> Name </th>
-                                <th> Password </th>
-                                <th> UserID </th>
-                                <th> View </th>
-                                <th> Edit </th>
-                                <th> Delete </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat = "data in usrData" >
-                                <td > {{ $index }} </td>
-                                <td > {{ data.username }} </td>
-                                <td > {{ data.password }} </td>
-                                <td > {{ data._id }} </td>
-                                <td > <input 
-                                    type = "button" 
-                                    class="btn btn-primary" 
-                                    name = "" 
-                                    ng-click = "view(data._id)" 
-                                    value = "view" > 
-                                </td>
-                                <td > <input 
-                                    type = "button" 
-                                    class="btn btn-warning" 
-                                    name = "" 
-                                    ng-click = "edit(data._id,$index)" 
-                                    value = "edit" > 
-                                </td>
-                                <td > <input 
-                                    type = "button" 
-                                    class="btn btn-danger" 
-                                    name = "" 
-                                    ng-click = "delete(data._id)" 
-                                    value = "delete" > 
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h1> User Management System </h1>
+    <table>
+        <tr>
+        <td> <input type = "text" ng-model = "data.username" placeholder = "Name" > </td>
+        <td> <input type = "password" ng-model = "data.password" placeholder = "Password" > </td>
+        <td> <input type = "button" ng-click = "addUser()" value = "Create" > </td>
+        <td> <input type = "button" ng-click = "updateUser()" value = "Update" > </td>
+        </tr>
+    </table>
+    <table class = "tableBoundary" >
+    <thead>
+        <th> Index </th>
+        <th> Name </th>
+        <th> Password </th>
+        <th> UserID </th>
+        <th> View </th>
+        <th> Edit </th>
+        <th> Delete </th>
+    </thead>
+        <tr class = "tableBoundary" ng-repeat = "data in usrData" >
+        <td class = "tableBoundary" > {{ $index }} </td>
+        <td class = "tableBoundary" > {{ data.username }} </td>
+        <td class = "tableBoundary" > {{ data.password }} </td>
+        <td class = "tableBoundary" > {{ data._id }} </td>
+        <td class = "tableBoundary" > <input type = "button" name = "" ng-click = "view(data._id)" value = "view" > </td>
+        <td class = "tableBoundary" > <input type = "button" name = "" ng-click = "edit(data._id,$index)" value = "edit" > </td>
+        <td class = "tableBoundary" > <input type = "button" name = "" ng-click = "delete(data._id)" value = "delete" > </td>
+        </tr>
+    </table>
 </section>

@@ -1,3 +1,5 @@
+
+
 <style>
     .tableBoundary{
         padding:3px;
@@ -6,68 +8,35 @@
         border-color:#f79646 #ccc;
     }
 </style>
+
 <div ng-controller =  "todocontroller">
-    <div ng-include = "'html/nav.html'">
+    <div ng-include = "'nav.html'">
     </div>
     <h1> ToDoList </h1>
-    <form
-        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-        <div class="input-group">
-            <input 
-            type="text" 
-            ng-model="list.title" 
-            class="form-control bg-light border-0 small" 
-            placeholder="Title"
-            aria-label="Title" 
-            aria-describedby="basic-addon2">
-            <input  
-            type="Text" 
-            ng-model="list.description"  
-            class="form-control bg-light border-0 small" 
-            placeholder="Description"
-            aria-label="Description" 
-            aria-describedby="basic-addon2">
-        </div> 
-        <br>
-        <br>
-        <button class="btn btn-primary" type="button" ng-click="addTodo()"  value="Create">Create</button>
-        <button class="btn btn-primary" type="button" ng-click="updateTodo()" value="Update">Update</button>
-    </form>
-    <br>
-    <br>
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">List Data</h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <th> Index </th>
-                        <th> Title </th>
-                        <th> Description </th>
-                        <th> Id </th>
-                        <th> Edit </th>
-                        <th> Delete </th>
-                    </thead>
-                    <tr ng-repeat = "data in todoListData">
-                        <td> {{$index}} </td>
-                        <td> {{data.title}}</td>
-                        <td> {{data.description}}</td>
-                        <td> {{data._id}}</td>
-                        <td> <input 
-                             type="button" 
-                             class="btn btn-warning" 
-                             name="" 
-                             ng-click="edit(data._id,$index)" 
-                             value = "edit" > 
-                        </td>
-                        <td> <input 
-                            type = "button" 
-                            class="btn btn-danger" 
-                            name = "" 
-                            ng-click = "delete(data._id)" 
-                            value = "delete" > 
-                        </td>
-                    </tr>
+    <table>
+        <tr>
+            <td> <input type = "text" ng-model = "list.title" placeholder = "title">  <br> </td>
+            <td> <input type = "text" ng-model = "list.description" placeholder = "description"> <br> </td> 
+            <td> <input type = "button" ng-click = "addTodo()" value = "CreateNew">  </td>
+            <td> <input type = "button" ng-click = "updateTodo()" value = "Update">  </td>
+        </tr>
+    </table>
+    <table class = "tableBoundary">
+        <thead>
+            <th> Index </th>
+            <th> Title </th>
+            <th> Description </th>
+            <th> Id </th>
+            <th> Edit </th>
+            <th> Delete </th>
+        </thead>
+    <tr class = "tableBoundary" ng-repeat = "data in todoListData">
+            <td class = "tableBoundary" > {{$index}} </td>
+            <td class = "tableBoundary" > {{data.title}}</td>
+            <td class = "tableBoundary" > {{data.description}}</td>
+            <td class = "tableBoundary" > {{data._id}}</td>
+            <td class = "tableBoundary" > <input type = "button" name = "" ng-click = "edit(data._id,$index)" value = "edit" > </td>
+            <td class = "tableBoundary" > <input type = "button" name = "" ng-click = "delete(data._id)" value = "delete" > </td>
+        </tr>
+    </table>
 </div>
