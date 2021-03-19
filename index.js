@@ -39,6 +39,7 @@ app.post('/api/auth/login', (req, res) => {
             res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
         }
         if (docs.length) {
+            console.log(docs);
             const token = makeid(15);
             session.insert([{ userId: docs[0]._id, token: token }], function (err, newDocs) {
                 if (err) {
@@ -47,7 +48,7 @@ app.post('/api/auth/login', (req, res) => {
                 console.log('Value of generated token is '+ token);
                 res.header({ "token": token });
                 console.log('Value of generated res.header  is '+ res);
-                res.json({ user: newDocs[0], msg: 'Successfully Logged-in' }, 200);
+                res.json({ user: newDocs[0],docs, msg: 'Successfully Logged-in' }, 200);
             });
         } 
         else {
