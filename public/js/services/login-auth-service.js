@@ -13,7 +13,7 @@ app.service('loginService', function($http) {
             })
             .catch(err => {
                 return err.data.msg;
-              })
+            })
             
     } 
 })
