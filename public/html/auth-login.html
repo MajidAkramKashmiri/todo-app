@@ -1,9 +1,49 @@
-<h1> Login Page </h1>
-<div ng-controller = "loginController" >
-    <form>
-        <label> UserName: </label> <input type = "text" name = "username" placeholder = "username" ng-model = "Username" > {{Username}}<br>
-        <label> Password: </label> <input type = "password" name = "password" placeholder = "password" ng-model = "Password" > {{Password}}<br>
-        <button type = "button" ng-click = "checkLogin()" > Login </button>
-    </form>
-
+<style>
+    .center{
+        margin-top: 150px;
+        margin-bottom:20px;
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+</style>
+<div class="center">
+    <div class="container">
+        <div class="jumbotron">
+            <div ng-controller = "loginController" >
+                <form>
+                    <div class="form-group">
+                        <h3> Login Page </h1>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1"></span>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                placeholder="Username" 
+                                ng-model = "Username"                                     
+                                aria-describedby="basic-addon3">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1"></span>
+                            <input 
+                                type="password" 
+                                class="form-control" 
+                                placeholder="Password" 
+                                ng-model = "Password" 
+                                aria-describedby="basic-addon3">
+                        </div>
+                        <br>
+                        <br>
+                        <button 
+                            type="button" 
+                            class="btn btn-primary btn-block"  
+                            ng-disabled=!Username 
+                            ng-click="checkLogin()"> Login 
+                        </button>       
+                    </div>
+              </form>
+            </div>
+        </div>    
+    </div>
 </div>
+
