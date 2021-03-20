@@ -1,74 +1,47 @@
-<div ng-controller="CreateUserController">
 <div class="modal-header">
-    <h3 class="modal-title" id="modal-title">Create User</h3>
+    <button 
+        type="button" 
+        class="close" 
+        ng-click="dismiss()" 
+        aria-label="Close"> <span>&times;</span>
+    </button> 
+    <h4 class="modal-title">User List</h4>
 </div>
 <div class="modal-body">
     <div class="form-group">
         <label for="usr" class="col-md-4 control-label">Name:</label>
-        <div class="col-md-8">
-            <input 
-                type="text" 
-                class="form-control" 
-                placeholder="Name" >
-        </div>
+            <div class="col-md-8">
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    placeholder="Name"
+                    ng-model="userdata.username" >
+            </div>
     </div>
-        
     <div class="form-group">
         <label for="password" class="col-md-4 control-label">Password:</label>
-        <div class="col-md-8">
-            <input 
-            type="password" 
-            class="form-control" 
-            placeholder="Password">
-        </div>
+            <div class="col-md-8">
+                <input 
+                    type="password" 
+                    class="form-control" 
+                    placeholder="Password"
+                    ng-model=userdata.password>
+            </div>
     </div>        
+</div>
+<br>
+<br>
+<div class="modal-footer">
+    <button 
+        type="button" 
+        class="btn btn-default" 
+        ng-click="dismiss()">Close
+    </button>
     <button 
         type="button" 
         class="btn btn-primary"  
-        ng-disabled=!data.username  
-        ng-click="addUser()" >Create
+        ng-disabled="!userdata.username || !userdata.password"  
+        ng-click="toAddUser()" >New User
     </button>
-
 </div>
-
-         <!-- <div class="panel panel-default">
-        <div class="panel-heading">Create User</div>
-           
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="usr">Name:</label>
-                    
-                        <input 
-                        type="text" 
-                        class="form-control" 
-                        placeholder="Name" >
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                    <label for="pwd">Password:</label>
-                    <input 
-                        type="password" 
-                        class="form-control" 
-                        placeholder="Password">
-                </div>
-                -->
-                <!-- <input
-                    ng-model="data.username"  
-                    ng-model="data.password" 
-    
-                    type="password" 
-                    ng-model="data.password" 
-                    class="form-control" 
-                    placeholder="Password">  -->
-                    <!-- aria-describedby="basic-addon1"> -->
-            <!-- </div>
-            <br> 
-            <button 
-                type="button" 
-                class="btn btn-primary"  
-                ng-disabled=!data.username  
-                ng-click="addUser()" >Create
-            </button>
-    </div> -->
-</div>
+       
