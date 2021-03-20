@@ -1,13 +1,38 @@
-app.controller("todocontroller", function ($scope, $http,todoListService) {
+app.controller("todocontroller", function ($scope, $http, $uibModal, todoListService) {
     $scope.userManagement = function () {
-    document.location.hash = "#!/home-ums"
+        document.location.hash = "#!/home-ums"
     }
     $scope.todolist = function () {
-    document.location.hash = "#!/home-todo"
+        document.location.hash = "#!/home-todo"
     }
     $scope.list = {
         title: "",
         description: ""
+    };
+    $scope.open = function (list, action) {
+        let modalInstance = $uibModal.open({
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: "html/createTodoModal.html",
+            controller: "CreateTodoListController",
+            resolve: {
+                list: function () {
+                    return list;
+                },
+                action: function () {
+                    return action;
+                }
+            }
+        });
+        modalInstance.result.then(function() {
+            todoListService.get()
+                .then(response=>{
+                    $scope.usrData=response;
+                }) 
+        }, 
+            function() {
+            }
+        );
     };
     todoListService.get()
         .then(response=>{
