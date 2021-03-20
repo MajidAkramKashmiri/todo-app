@@ -15,7 +15,9 @@
                     type="text" 
                     class="form-control" 
                     placeholder="Name"
-                    ng-model="userdata.username" >
+                    ng-readonly="action=='VIEW'"
+                    ng-model="userdata.username"
+                >
             </div>
     </div>
     <div class="form-group">
@@ -25,7 +27,9 @@
                     type="password" 
                     class="form-control" 
                     placeholder="Password"
-                    ng-model=userdata.password>
+                    ng-readonly="action=='VIEW'"
+                    ng-model="userdata.password"
+                >
             </div>
     </div>        
 </div>
@@ -40,8 +44,11 @@
     <button 
         type="button" 
         class="btn btn-primary"  
-        ng-disabled="!userdata.username || !userdata.password"  
-        ng-click="toAddUser()" >New User
+        ng-disabled="!userdata.username || !userdata.password"
+        ng-if="action!=='VIEW'"
+        ng-click="toAddUser()" 
+    >
+        Save
     </button>
 </div>
        

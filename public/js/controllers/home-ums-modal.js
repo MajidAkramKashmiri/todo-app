@@ -1,13 +1,22 @@
-app.controller("CreateUserController", function ($scope, $uibModalInstance, $http, user, UserService) {
-    $scope.userdata = {
-        username: "",
-        password: "",
-    }
+app.controller("CreateUserController", function ($scope, $uibModalInstance, $http, user, action, UserService) {
+    console.log(user);
+    console.log(action);
+    $scope.userdata = user;
+    $scope.action = action;
     $scope.toAddUser = function() {
-        UserService.create($scope.userdata)
-            .then(response=> {
-                $uibModalInstance.close();
-            });
+        if ($scope.userdata._id) {
+            UserService.update($scope.userdata._id, $scope.userdata)
+                .then(response=> {
+                    $uibModalInstance.close();
+                });
+        }
+        else {
+            UserService.create($scope.userdata)
+                .then(response=> {
+                    $uibModalInstance.close();
+                });  
+        }
+        
     }
     $scope.ok = function () {
         $uibModalInstance.close();
