@@ -9,9 +9,23 @@ const { O_CREAT } = require('constants');
 const user = new Datastore({ filename: 'collections/user.db', autoload: true });
 const session = new Datastore({ filename: 'collections/session.db', autoload: true });
 const todo = new Datastore({ filename: 'collections/todo.db', autoload: true });
+// query into user collection  with username and password with admin/admin
+//if no record found than create user with admin/admin (administrator)
+user.find({username:"admin"},function(err,docs){
+    if (docs) {
+        if (docs.length<1) {
+            user.insert(
+                { username:"admin", password:"admin", firstName:"administrator", lastName:"", 
+                  email:"", phone:"", address:"" },
+                function(err,docs) {
+     
+                }
+            )
+        }
+    }
+})
 app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, 'public')))
-
 var myLogger = function (req, res, next) {
     if (req.headers.token) {
         let token = req.headers.token
@@ -20,17 +34,16 @@ var myLogger = function (req, res, next) {
                 res.json({ msg: "Unauthorize access" }, 401);
             }
             if (docs) {
-                next();        
+                next();
             }
             else {
-                res.json({ msg: "Unauthorize access" }, 401);        
+                res.json({ msg: "Unauthorize access" }, 401);       
             }
         });
     }
     else {
         res.json({ msg: "Unauthorize access" }, 401);
     }
-    
 }
 // Authentication
 app.post('/api/auth/login', (req, res) => {
@@ -83,6 +96,9 @@ app.get('/user/:id', myLogger, (req, res) => {
 })
 app.post('/user', myLogger, (req, res) => {
     const data = req.body;
+    console.log("the data of the user is ");
+    console.log(data);
+    
     user.insert(data, function (err, newDoc) {
         if (err) {
             res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
@@ -198,5 +214,3 @@ function makeid(length) {
     }
     return result;
 }
-
-
