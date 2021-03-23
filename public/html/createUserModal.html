@@ -8,47 +8,116 @@
     <h4 class="modal-title">User List</h4>
 </div>
 <div class="modal-body">
-    <div class="form-group">
-        <label for="usr" class="col-md-4 control-label">Name:</label>
-            <div class="col-md-8">
-                <input 
-                    type="text" 
-                    class="form-control" 
-                    placeholder="Name"
-                    ng-readonly="action=='VIEW'"
-                    ng-model="userdata.username"
-                >
+    <form name="createUser" noValidate>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label for="usr" class="col-md-4 control-label">Username:</label>
+                    <div class="col-md-8">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            name="username"
+                            placeholder="Name"
+                            ng-readonly="action=='VIEW'"
+                            ng-model="userdata.username"
+                            ng-required="true"
+                        >
+                    </div>
+                </div>
+                <div class="form-group" ng-hide="action=='VIEW'">
+                    <label for="password" class="col-md-4 control-label" >Password:</label>
+                    <div class="col-md-8">
+                        <input 
+                            type="password" 
+                            class="form-control" 
+                            placeholder="Password"
+                            ng-readonly="action=='VIEW'"
+                            ng-model="userdata.password"
+                            ng-required="true"
+                        >
+                    </div>
+                </div>   
+                <div class="form-group">
+                    <label for="FirstName" class="col-md-4 control-label" >FirstName:</label>
+                    <div class="col-md-8">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="FirstName"
+                            ng-readonly="action=='VIEW'"
+                            ng-model="userdata.firstName"
+                            ng-required="true"
+                        >
+                    </div>
+                </div>
+                <div class="form-group">
+                <label for="LastName" class="col-md-4 control-label">LastName:</label>
+                    <div class="col-md-8">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="lastName"
+                            ng-readonly="action=='VIEW'"
+                            ng-model="userdata.lastName"
+                        >
+                    </div>
+                </div>
+                <div class="form-group">
+                <label for="email" class="col-md-4 control-label">Email:</label>
+                    <div class="col-md-8">
+                        <input 
+                            type="email" 
+                            class="form-control" 
+                            placeholder="Email"
+                            ng-readonly="action=='VIEW'"
+                            ng-model="userdata.email"
+                        >
+                    </div>
+                </div>
+                <div class="form-group">
+                <label for="phone" class="col-md-4 control-label">PhoneNumber:</label>
+                    <div class="col-md-8">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="PhoneNumber"
+                            ng-readonly="action=='VIEW'"
+                            ng-model="userdata.phone"
+                        >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address" class="col-md-4 control-label">Address:</label>
+                    <div class="col-md-8">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="Address"
+                            ng-readonly="action=='VIEW'"
+                            ng-model="userdata.address"
+                        >
+                    </div>
+                </div>
             </div>
-    </div>
-    <div class="form-group">
-        <label for="password" class="col-md-4 control-label">Password:</label>
-            <div class="col-md-8">
-                <input 
-                    type="password" 
-                    class="form-control" 
-                    placeholder="Password"
-                    ng-readonly="action=='VIEW'"
-                    ng-model="userdata.password"
-                >
-            </div>
-    </div>        
+        </div>    
+    </form>
 </div>
-<br>
-<br>
 <div class="modal-footer">
-    <button 
-        type="button" 
-        class="btn btn-default" 
-        ng-click="dismiss()">Close
-    </button>
-    <button 
-        type="button" 
-        class="btn btn-primary"  
-        ng-disabled="!userdata.username || !userdata.password"
-        ng-if="action!=='VIEW'"
-        ng-click="toAddUser()" 
+    <button
+        type="button"
+        class="btn btn-primary"
+        ng-click="dismiss()"
     >
-        Save
+        Close
+    </button>
+    <button
+            ng-click="toAddUser()"
+            type="button"
+            class="btn btn-primary"
+            ng-if="action!=='VIEW'"
+            ng-disabled="createUser.$invalid"
+        >
+            Save
     </button>
 </div>
-       

@@ -1,6 +1,4 @@
 app.controller("CreateUserController", function ($scope, $uibModalInstance, $http, user, action, UserService) {
-    console.log(user);
-    console.log(action);
     $scope.userdata = user;
     $scope.action = action;
     $scope.toAddUser = function() {
@@ -16,7 +14,6 @@ app.controller("CreateUserController", function ($scope, $uibModalInstance, $htt
                     $uibModalInstance.close();
                 });  
         }
-        
     }
     $scope.ok = function () {
         $uibModalInstance.close();
