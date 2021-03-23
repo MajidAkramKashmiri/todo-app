@@ -7,6 +7,7 @@ app.controller("todocontroller", function ($scope, $http, $uibModal, todoListSer
     }
     $scope.list = {
         title: "",
+        priority:"",
         description: ""
     };
     $scope.open = function (list, action) {
@@ -27,7 +28,7 @@ app.controller("todocontroller", function ($scope, $http, $uibModal, todoListSer
         modalInstance.result.then(function() {
             todoListService.get()
                 .then(response=>{
-                    $scope.usrData=response;
+                    $scope.todoListData=response;
                 }) 
         }, 
             function() {
