@@ -27,7 +27,13 @@
                 <div class="form-group">
                     <label for="Priority" class="col-md-4 control-label">Priority:</label>
                     <div class="col-md-8">
-                        <select name="Set Priority" ng-required="true" class="form-control" ng-model="list.priority">
+                        <select  
+                            name="Set Priority" 
+                            ng-required="true" 
+                            ng-readonly="action=='VIEW'"
+                            class="form-control" 
+                            ng-model="list.priority"
+                        >
                             <option value="high">High</option>
                             <option value="medium">Medium</option>
                             <option value="fiat">Low</option>

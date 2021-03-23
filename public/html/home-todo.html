@@ -17,24 +17,32 @@
             <div class="panel-body">
                 <table class="table">
                     <thead>
-                        <th> Index </th>
                         <th> Title </th>
                         <th> Priority </th>
                         <th> Description </th>
+                        <th> View </th>
                         <th> Edit </th>
                         <th> Delete </th>
                     </thead>
                     <tr class="tableBoundary" ng-repeat="data in todoListData">
-                        <td class="tableBoundary"> {{$index}} </td>
                         <td class="tableBoundary"> {{data.title}}</td>
                         <td class="tableBoundary"> {{data.priority}}</td>
                         <td class="tableBoundary"> {{data.description | truncate }} </td>
                         <td class="tableBoundary">
                             <input 
                                 type = "button"
+                                class="btn btn-success"
+                                name=""
+                                ng-click="open(data,'VIEW')"
+                                value="view"
+                            >
+                        </td>
+                        <td class="tableBoundary">
+                            <input 
+                                type = "button"
                                 class="btn btn-warning"
                                 name=""
-                                ng-click="open(data,'Edit')"
+                                ng-click="open(data,'EDIT')"
                                 value="edit"
                             >
                         </td>
