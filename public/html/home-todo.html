@@ -28,7 +28,7 @@
                         <td class="tableBoundary"> {{$index}} </td>
                         <td class="tableBoundary"> {{data.title}}</td>
                         <td class="tableBoundary"> {{data.priority}}</td>
-                        <td class="tableBoundary"> {{data.description }} </td>
+                        <td class="tableBoundary"> {{data.description | truncate }} </td>
                         <td class="tableBoundary">
                             <input 
                                 type = "button"
