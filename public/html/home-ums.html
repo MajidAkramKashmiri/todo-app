@@ -16,7 +16,7 @@
         <div class="panel-body">
             <table class="table">
                 <thead>
-                    <th>Index</th>
+                    <th>UserAvatar</th>
                     <th>Username</th>
                     <th>First Name</th>
                     <th>Last Name</th>
@@ -26,7 +26,7 @@
                     <th>Delete</th>
                 </thead>
                 <tr class="tableBoundary" ng-repeat="data in usrData">
-                    <td class="tableBoundary"> {{ $index }} </td>
+                    <td class="tableBoundary"> <user-avatar user=data></user-avatar> </td>
                     <td class="tableBoundary"> {{ data.username }} </td>
                     <td class="tableBoundary"> {{ data.firstName }} </td>
                     <td class="tableBoundary"> {{ data.lastName || 'N/A' }} </td>
