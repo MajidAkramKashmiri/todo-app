@@ -43,7 +43,30 @@ app.controller("crudController", function ($scope, $http,$uibModal,UserService) 
             data:(item)=>{
                 return item.lastName
             }
+        },
+        {
+            label:'View',
+            dataType:'view',
+            data:(item)=>{
+                console.log(item);
+                return item
+            }
+        },
+        {
+            label:'Edit',
+            dataType:'edit',
+            data:(item)=>{
+                return item
+            }
+        },
+        {
+            label:'Delete',
+            dataType:'delete',
+            data:(item)=>{
+                return item
+            }
         }
+
     ]
     $scope.open = function (user, action) {
         let modalInstance = $uibModal.open({

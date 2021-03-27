@@ -1,10 +1,10 @@
 <table class="table">
     <thead>
-        <th ng-repeat="def in $ctrl.definition"> {{ def.label }} </th>
+        <th ng-repeat="def in $ctrl.definition">{{ def.label }}</th>
     </thead>
     <tbody>
         <tr class="tableBoundary" ng-repeat="item in $ctrl.dataitems">
-            <td class="tableBoundary" ng-repeat="def in $ctrl.definition">
+            <td ng-repeat="def in $ctrl.definition">
                 <span ng-switch="def.dataType">
                     <span ng-switch-when="text">
                         {{ def.data(item) || 'N/A' }}
@@ -12,7 +12,15 @@
                     <span ng-switch-when="userAvatar">
                         <user-avatar user="item"></user-avatar>
                     </span>
-
+                    <span ng-switch-when="view">
+                        <button type="button" class="btn btn-success" ng-click="open(item,'VIEW')">View</button>
+                    </span>
+                    <span ng-switch-when="edit">
+                        <button class="btn btn-warning" ng-click="open(item,'EDIT')">Edit</button>
+                    </span>
+                    <span ng-switch-when="delete">
+                        <button class="btn btn-danger" ng-click="delete(item._id)">Delete</button>
+                    </span>
                 </span>
             </td>
         </tr>
