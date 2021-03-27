@@ -1,0 +1,12 @@
+<table>
+    <thead>
+        <th ng-repeat="def in $ctrl.definition"> {{ def.label }} </th>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in $ctrl.dataitems">
+            <td ng-repeat="def in $ctrl.definition">
+                {{ def.data(item) }}
+            </td>
+        </tr>
+    </tbody>
+</table>
