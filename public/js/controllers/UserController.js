@@ -1,4 +1,5 @@
 app.controller("crudController", function ($scope, $http,$uibModal,UserService) {
+    $scope.refreshDataTable=0; 
     $scope.userManagement = function () {
         document.location.hash = "#!/home-ums"
     }
@@ -17,11 +18,13 @@ app.controller("crudController", function ($scope, $http,$uibModal,UserService) 
     }
     $scope.userDefinition = [
         {
-            label:'UserAvatar',
             dataType:'userAvatar',
             data:(item)=>{
-               return item.username
-            }
+               return item
+            },
+            headerCssClass: '',
+            columnCssClass: '',
+            actionCssClass: ''    
         },
         {
             label:'Username',
@@ -44,29 +47,35 @@ app.controller("crudController", function ($scope, $http,$uibModal,UserService) 
                 return item.lastName
             }
         },
-        {
-            label:'View',
-            dataType:'view',
-            data:(item)=>{
-                console.log(item);
-                return item
-            }
+        {   
+            label:'',
+            dataType: 'button',
+            action: (item, index) => 
+                {
+                    return $scope.open(item,'VIEW');
+                },
+            actionLabel:'View',
+            actionCssClass:'btn btn-success'    
         },
-        {
-            label:'Edit',
-            dataType:'edit',
-            data:(item)=>{
-                return item
-            }
+        {   
+            label:'',
+            dataType: 'button',
+            action: (item, index) => { 
+               return  $scope.open(item,'EDIT'); 
+            },
+            actionLabel:'Edit',
+            actionCssClass:'btn btn-warning'
         },
-        {
-            label:'Delete',
-            dataType:'delete',
-            data:(item)=>{
-                return item
-            }
+        {   
+            label:'',
+            dataType: 'button',
+            action: (item, index) => { 
+                $scope.refreshDataTable++;
+                return $scope.delete(item._id);
+            },
+            actionLabel:'Delete',
+            actionCssClass:'btn btn-danger'
         }
-
     ]
     $scope.open = function (user, action) {
         let modalInstance = $uibModal.open({
@@ -84,16 +93,13 @@ app.controller("crudController", function ($scope, $http,$uibModal,UserService) 
             }
         });
         modalInstance.result.then(function() {
-            UserService.get()
-                .then(response=>{
-                    $scope.usrData=response;
-                }) 
+            console.log("entered the result");
+            $scope.refreshDataTable++;
             }, 
             function(){
             }
         );
     };
-     
     UserService.get()
         .then(response=>{
             $scope.usrData=response;
@@ -109,11 +115,7 @@ app.controller("crudController", function ($scope, $http,$uibModal,UserService) 
     }
     $scope.delete = function (id) {
         UserService.delete(id)
-            .then(response=>{
-            })  
-        UserService.get()
-            .then(response=>{
-            $scope.usrData=response;
-            })   
+            .then(response=>{       
+            })
     }
 });
