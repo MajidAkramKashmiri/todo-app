@@ -5,61 +5,16 @@
         <br>
         <br>
         <div class="panel panel-default">
-            <div class="panel-heading clearfix"><h4 class="pull-left">Todo List</h4>
-                <button
-                    type="button"
-                    class=" pull-right btn btn-primary " 
-                    ng-click="open(list, 'CREATE')"
-                >
+            <div class="panel-heading clearfix">
+                <h4 class="pull-left">Todo List</h4>
+                <button type="button" class=" pull-right btn btn-primary " ng-click="open(list, 'CREATE')">
                     Create
                 </button>
             </div>
             <div class="panel-body">
-                <table class="table">
-                    <thead>
-                        <th> Title </th>
-                        <th> Priority </th>
-                        <th> Description </th>
-                        <th> View </th>
-                        <th> Edit </th>
-                        <th> Delete </th>
-                    </thead>
-                    <tr class="tableBoundary" ng-repeat="data in todoListData">
-                        <td class="tableBoundary"> {{data.title}}</td>
-                        <td class="tableBoundary"> {{data.priority}}</td>
-                        <td class="tableBoundary"> {{data.description | truncate }} </td>
-                        <td class="tableBoundary">
-                            <input 
-                                type = "button"
-                                class="btn btn-success"
-                                name=""
-                                ng-click="open(data,'VIEW')"
-                                value="view"
-                            >
-                        </td>
-                        <td class="tableBoundary">
-                            <input 
-                                type = "button"
-                                class="btn btn-warning"
-                                name=""
-                                ng-click="open(data,'EDIT')"
-                                value="edit"
-                            >
-                        </td>
-                        <td class="tableBoundary">
-                            <input 
-                                type="button"
-                                class="btn btn-danger"
-                                name=""
-                                ng-click="delete(data._id)"
-                                value="delete"
-                            > 
-                        </td>
-                    </tr>
-                </table>
+                <datatable definition="ListDefinition" dataservice="Service" refreshsignal="refreshDataTable">
+                </datatable>
             </div>
         </div>
     </div>
 </div>
-
-
