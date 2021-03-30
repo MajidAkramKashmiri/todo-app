@@ -7,60 +7,12 @@
         <div class="panel-heading clearfix">
             <h4 class="pull-left">User List</h4>
             <button type="button" class=" pull-right btn btn-primary " ng-click="open(data, 'CREATE')">
-                Create user
+                Create User
             </button>
         </div>
         <div class="panel-body">
-
-            <datatable definition="userDefinition" dataservice="UserService">
+            <datatable definition="userDefinition" dataservice="UserService" refreshsignal="refreshDataTable">
             </datatable>
-
-            <!-- <table class="table">
-                <thead>
-                    <th>UserAvatar</th>
-                    <th>Username</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Phone</th>
-                    <th>View</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </thead>
-                <tr class="tableBoundary" ng-repeat="data in usrData">
-                    <td class="tableBoundary"> <user-avatar user=data></user-avatar> </td>
-                    <td class="tableBoundary"> {{ data.username }} </td>
-                    <td class="tableBoundary"> {{ data.firstName }} </td>
-                    <td class="tableBoundary"> {{ data.lastName || 'N/A' }} </td>
-                    <td class="tableBoundary"> {{ data.phone || 'N/A'}} </td>
-                    <td class="tableBoundary"> 
-                        <input 
-                            type="button"
-                            class="btn btn-success"
-                            name="" 
-                            ng-click="open(data, 'VIEW')"
-                            value="view"
-                        >
-                    </td>
-                    <td class="tableBoundary" >
-                        <input  
-                            type="button" 
-                            class="btn btn-warning"
-                            name="" 
-                            ng-click="open(data, 'EDIT')"
-                            value="edit"
-                        > 
-                    </td>
-                    <td class="tableBoundary">
-                        <input 
-                            type="button" 
-                            class="btn btn-danger"
-                            name="" 
-                            ng-click="delete(data._id)"
-                            value="delete"
-                        >
-                    </td>
-                </tr>
-            </table> -->
         </div>
     </div>
 </section>
