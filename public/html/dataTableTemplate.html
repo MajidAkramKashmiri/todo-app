@@ -1,10 +1,12 @@
 <table class="table">
     <thead>
-        <th ng-repeat="def in $ctrl.definition">{{ def.label }}</th>
+        <tr>
+            <th ng-repeat="def in $ctrl.definition" ng-class="def.headerCssClass">{{ def.label }}</th>
+        </tr>
     </thead>
     <tbody>
         <tr class="tableBoundary" ng-repeat="item in $ctrl.dataitems">
-            <td ng-repeat="def in $ctrl.definition">
+            <td ng-repeat="def in $ctrl.definition" ng-class="def.columnCssClass">
                 <span ng-switch="def.dataType">
                     <span ng-switch-when="text">
                         {{ def.data(item) || 'N/A' }}
@@ -12,14 +14,15 @@
                     <span ng-switch-when="userAvatar">
                         <user-avatar user="item"></user-avatar>
                     </span>
-                    <span ng-switch-when="view">
-                        <button type="button" class="btn btn-success" ng-click="open(item,'VIEW')">View</button>
-                    </span>
-                    <span ng-switch-when="edit">
-                        <button class="btn btn-warning" ng-click="open(item,'EDIT')">Edit</button>
-                    </span>
-                    <span ng-switch-when="delete">
-                        <button class="btn btn-danger" ng-click="delete(item._id)">Delete</button>
+                    <span ng-switch-when="button">
+                        <button     
+                            type="button" 
+                            class="btn btn-success" 
+                            ng-class="def.actionCssClass"
+                            ng-click="def.action(item, $index)"
+                        >
+                            {{def.actionLabel}}
+                        </button>
                     </span>
                 </span>
             </td>
