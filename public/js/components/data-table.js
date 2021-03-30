@@ -1,7 +1,8 @@
 app.component('datatable', {
     bindings: {
         definition: '<',
-        dataservice: '<'
+        dataservice: '<',
+        refreshsignal: '<'
     },
     templateUrl: 'html/dataTableTemplate.html',
     controller: 'DataTableController'
