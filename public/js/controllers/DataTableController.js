@@ -1,52 +1,56 @@
 app.controller('DataTableController', function($scope, $uibModal) {
     var $ctrl = this;
+
     $ctrl.$onInit = function() {
-        $scope.currentPage = 0;
-        $scope.isDisable = 0;
-        $scope.pageNbrs = [1, 2];
-        $ctrl.dataservice.get($scope.currentPage)
-            .then(
-                function successCallback(response) {
-                    $scope.totalPages = response.pagination.pages;
-                    $scope.totalEntries = response.pagination.total;
-                    $ctrl.dataitems = response.dataitems;
-                },
-            )
+        $scope.currentPage = 1; // Start with page number 1
+        $scope.reloadTable($scope.currentPage);
     }
-    $scope.gotoPage=function(pageNbr){
-        $scope.currentPage = pageNbr;
-        if ($scope.currentPage != $scope.totalPages - 1 && $scope.currentPage != 0) {
-            $scope.isDisable = 0;
-            $scope.pageNbrs.splice(0, $scope.pageNbrs.length, $scope.currentPage, $scope.currentPage + 1, $scope.currentPage + 2);
-        }
-        else
-            {
-                if ( $scope.currentPage == $scope.totalPages - 1 ) {
-                    $scope.isDisable = 1;
-                    $scope.pageNbrs.splice(0, $scope.pageNbrs.length, $scope.currentPage, $scope.currentPage + 1);
-                }
-                else 
-                    {
-                        if ( $scope.currentPage == 0 )
-                        {                             
-                            $scope.isDisable=0;
-                            $scope.pageNbrs.splice(0, $scope.pageNbrs.length, $scope.currentPage+1, $scope.currentPage + 2);
-                        }
-                    }
-            } 
-    $ctrl.dataservice.get(pageNbr)
-        .then(
-            function successCallback(response) {
-                $ctrl.dataitems = response.dataitems;
-            },
-        )
+
+    $scope.gotoFirstPage = () => {
+        $scope.gotoPage(1);
     }
-    $scope.$watch('$ctrl.refreshsignal',function(){
-        $ctrl.dataservice.get($scope.currentPage)
-            .then(
-                function successCallback(response) {
-                    $ctrl.dataitems = response.dataitems;
-                },
-            )
+
+    $scope.gotoPrevPage = () => {
+        $scope.gotoPage($scope.currentPage - 1);
+    }
+
+    $scope.gotoNextPage = () => {
+        $scope.gotoPage($scope.currentPage + 1);
+    }
+
+    $scope.gotoLastPage = () => {
+        $scope.gotoPage($scope.pagination.pages);
+    }
+
+    $scope.gotoPage = (pageNbr) => {
+        $scope.reloadTable(pageNbr);
+    }
+
+    $scope.reloadTable = (pageNbr) => {
+        $ctrl.dataservice.get(pageNbr)
+            .then(response => {
+                $scope.updateTableData(response.dataitems);
+                $scope.buildPagination(response.pagination);
+            })
+    }
+
+    $scope.updateTableData = (dataitems) => {
+        $ctrl.dataitems = dataitems;
+    }
+
+    $scope.buildPagination = (pagination) => {
+        $scope.pagination = pagination;
+        $scope.currentPage = pagination.page;
+        $scope.pageNbrs = [];
+
+        ((pagination.page - 2) > 0) ? $scope.pageNbrs.push(pagination.page - 2) : null; // Add previous page
+        ((pagination.page - 1) > 0) ? $scope.pageNbrs.push(pagination.page - 1) : null; // Add previous page
+        $scope.pageNbrs.push(pagination.page); // Add current page
+        ((pagination.page + 1) <= pagination.pages) ? $scope.pageNbrs.push(pagination.page + 1) : null; // Add next page
+        ((pagination.page + 2) <= pagination.pages) ? $scope.pageNbrs.push(pagination.page + 2) : null; // Add next page
+    }
+
+    $scope.$watch('$ctrl.refreshsignal', (oldVal, newVal) => {
+        $scope.reloadTable($scope.currentPage);
     })
 })

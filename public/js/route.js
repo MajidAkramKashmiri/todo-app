@@ -8,7 +8,7 @@ app.config(function ($routeProvider) {
     });
     $routeProvider.when("/home-user", {
         templateUrl : "html/home-user.html",
-        controller: "homeController"
+        controller: "HomeController"
     });
     $routeProvider.when("/home-todo", {
         templateUrl : "html/home-todo.html"
@@ -24,6 +24,6 @@ app.controller('loginController', function($scope,$http,loginService) {
         loginService.post(username,password)
             .then(response=>{
                 $scope.usrData = response;
-            }) 
+            })
     }
 })

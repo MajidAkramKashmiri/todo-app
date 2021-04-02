@@ -23,8 +23,8 @@ user.find({username:"admin"},function(err,docs){
 })
 user.find({},function(err,docs){
     dataCount = docs.length;
-    pageCount=(Math.ceil(dataCount / size));   
-    
+    pageCount=(Math.ceil(dataCount / size));
+
 })
 app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, 'public')))
@@ -39,7 +39,7 @@ var myLogger = function (req, res, next) {
                 next();
             }
             else {
-                res.json({ msg: "Unauthorize access" }, 401);       
+                res.json({ msg: "Unauthorize access" }, 401);
             }
         });
     }
@@ -65,7 +65,7 @@ app.post('/api/auth/login', (req, res) => {
                 console.log('Value of generated res.header  is '+ res);
                 res.json({ user: newDocs[0],docs, msg: 'Successfully Logged-in' }, 200);
             });
-        } 
+        }
         else {
             res.json({ user: null, token: null, msg: 'Invalid Username/Password' }, 400);
         }
@@ -83,53 +83,49 @@ app.put('/api/auth/logout', (req, res) => {
 //         res.json
 //         (
 //             {
-//             data:docs, 
+//             data:docs,
 //             error:[err],
-//             pagination: { 
-//                 size:size, 
+//             pagination: {
+//                 size:size,
 //                 page:1,
-//                 dataCount:dataCount, 
-//                 pagecount :pageCount 
+//                 dataCount:dataCount,
+//                 pagecount :pageCount
 //             }
 //             },
 //             200
 //         );
 //     });
 // })
-app.get('/user', myLogger, (req, res) =>{
-    user.count({}, function (err,total) {
-        const pageNbr = req.query.pageNbr;
-        console.log('page number is'+pageNbr);
+app.get('/user', myLogger, (req, res) => {
+    user.count({}, function (err, total) {
+        const pageNbr = +req.query.pageNbr;
         const pageSize = 10;
         const recordStart = (pageNbr - 1) * pageSize;
-        console.log('record start is'+recordStart);
-        const pages=Math.floor(total / pageSize) + ((total % pageSize) ? 1 : 0);
-        
+        const pages = Math.floor(total / pageSize) + ((total % pageSize) ? 1 : 0);
         user.find({})
             .skip(recordStart)
             .limit(pageSize)
-            .exec(function(err,docs) {
+            .exec(function(err, docs) {
                 if (err) {
-                    console.log(err);
-                    res.json({ msg:'Interval Server Error' }, 500);
+                    res.json({ msg: 'Internal Server Error' }, 500);
                 }
                 else {
-                    res.json(
-                        {
-                            dataitems: docs,
-                            pagination: {
-                                recordStart: recordStart + 1,
-                                recordEnd: recordStart + pageSize,
-                                size: pageSize,
-                                total: total,
-                                pages: pages,
-                            },
-                        }
-                    )
+                    const responseObj = {
+                        dataitems: docs,
+                        pagination: {
+                            recordStart: recordStart + 1,
+                            recordEnd: recordStart + pageSize,
+                            size: pageSize,
+                            page: pageNbr,
+                            total: total,
+                            pages: pages,
+                        },
+                    }
+                    res.json(responseObj, 200);
                 }
             });
     });
-})
+});
 app.get('/user/:id', myLogger, (req, res) => {
     let _id = req.params.id;
     user.find({ _id }, function (err, docs) {
@@ -145,7 +141,7 @@ app.post('/user', myLogger, (req, res) => {
     const data = req.body;
     console.log("the data of the user is ");
     console.log(data);
-    
+
     user.insert(data, function (err, newDoc) {
         if (err) {
             res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
@@ -178,7 +174,7 @@ app.delete('/user/:id', myLogger, (req, res) => {
             if (err) {
             res.json({ msg: 'Error while deleting list' }, 500);
             }
-            res.json({ msg: 'List deleted successfully' }, 200);    
+            res.json({ msg: 'List deleted successfully' }, 200);
         }
     );
 });
