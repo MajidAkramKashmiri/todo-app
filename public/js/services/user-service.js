@@ -1,11 +1,12 @@
 app.service('UserService', function($http) {
-    this.get = function() {
+    this.get = function(pageNbr=1) {
         return  $http({
             method: 'GET',
-            url: '/user',
+            url: '/user?pageNbr='+pageNbr,
             headers : { token: localStorage.getItem('token') }
         }) 
             .then(function successCallback (response) {
+                console.log(response);
                 return response.data;
                 },
                 function errorCallback (response) {

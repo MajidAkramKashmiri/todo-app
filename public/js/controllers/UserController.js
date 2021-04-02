@@ -1,5 +1,6 @@
 app.controller("crudController", function ($scope, $http,$uibModal,UserService) {
-    $scope.refreshDataTable=0; 
+    $scope.refreshDataTable=0;
+    $scope.pagenumber=1; 
     $scope.userManagement = function () {
         document.location.hash = "#!/home-ums"
     }
@@ -16,6 +17,11 @@ app.controller("crudController", function ($scope, $http,$uibModal,UserService) 
         phone: "",
         address: ""
     }
+    $scope.totalUserCount;
+    UserService.get()
+                .then(response=>{
+                    $scope.totalUserCount = response.userDataCount;
+                })
     $scope.userDefinition = [
         {
             dataType:'userAvatar',
@@ -116,6 +122,44 @@ app.controller("crudController", function ($scope, $http,$uibModal,UserService) 
     $scope.delete = function (id) {
         UserService.delete(id)
             .then(response=>{       
+            })
+    }
+    $scope.next=function(){
+        $scope.pagenumber = $scope.pagenumber + 10;
+        UserService.get($scope.pagenumber)
+            .then(response=>{
+                console.log(response)
+                if($scope.pagenumber>(response.userDataCount))
+                {
+                   $scope.pagenumber = $scope.pagenumber - 10; 
+                   alert('this is the last page');
+                }
+                else {
+                    $scope.refreshDataTable++;
+                }
+            })
+    }
+    $scope.previous=function(){
+        if  ($scope.pagenumber > 10)  {
+            $scope.pagenumber = $scope.pagenumber - 10;
+            UserService.get($scope.pagenumber)
+                .then(response=>{
+                    $scope.refreshDataTable++;
+                })
+        }
+    }
+    $scope.first=function(){
+        $scope.pagenumber = 1;
+        UserService.get($scope.pagenumber)
+            .then(response=>{
+               $scope.refreshDataTable++;
+            })
+    }
+    $scope.last=function(){
+        $scope.pagenumber = $scope.totalUserCount-($scope.totalUserCount%10);
+        UserService.get($scope.pagenumber)
+            .then(response=>{
+            $scope.refreshDataTable++;
             })
     }
 });

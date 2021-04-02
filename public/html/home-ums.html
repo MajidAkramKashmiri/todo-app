@@ -11,8 +11,16 @@
             </button>
         </div>
         <div class="panel-body">
-            <datatable definition="userDefinition" dataservice="UserService" refreshsignal="refreshDataTable">
+            <datatable definition="userDefinition" dataservice="UserService" refreshsignal="refreshDataTable"
+                pagenumber="pagenumber">
             </datatable>
         </div>
+        <div class="btn-group pull-right" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" ng-click="first()">First</button>
+            <button type="button" class="btn btn-default" ng-click="previous()">Prev</button>
+            <button type="button" class="btn btn-default" ng-click="next()">Next</button>
+            <button type="button" class="btn btn-default" ng-click="last()">Last</button>
+        </div>
     </div>
+
 </section>
