@@ -16,10 +16,10 @@
             </datatable>
         </div>
         <div class="btn-group pull-right" role="group" aria-label="...">
-            <button type="button" class="btn btn-default" ng-click="first()">First</button>
-            <button type="button" class="btn btn-default" ng-click="previous()">Prev</button>
-            <button type="button" class="btn btn-default" ng-click="next()">Next</button>
-            <button type="button" class="btn btn-default" ng-click="last()">Last</button>
+            <button type="button" class="btn btn-default" ng-disabled="!pagenumber" ng-click="first()">First</button>
+            <button type="button" class="btn btn-default" ng-disabled="!pagenumber" ng-click="previous()">Prev</button>
+            <button type="button" class="btn btn-default" ng-disabled="!isDisabled" ng-click="next()">Next</button>
+            <button type="button" class="btn btn-default" ng-disabled="!isDisabled" ng-click="last()">Last</button>
         </div>
     </div>
 
