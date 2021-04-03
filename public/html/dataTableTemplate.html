@@ -15,12 +15,8 @@
                         <user-avatar user="item"></user-avatar>
                     </span>
                     <span ng-switch-when="button">
-                        <button     
-                            type="button" 
-                            class="btn btn-success" 
-                            ng-class="def.actionCssClass"
-                            ng-click="def.action(item, $index)"
-                        >
+                        <button type="button" class="btn btn-success" ng-class="def.actionCssClass"
+                            ng-click="def.action(item, $index)">
                             {{def.actionLabel}}
                         </button>
                     </span>
@@ -28,4 +24,53 @@
             </td>
         </tr>
     </tbody>
-</table>
+    </table>
+<div class="row">
+    <div class="col-md-6">
+        <h4>
+            Showing {{currentPage*10+1}} to {{ (currentPage+1)*10> totalEntries ? totalEntries : (currentPage+1)*10}} of {{totalEntries}} entries
+        </h4>
+    </div>
+    <div  class="col-md-6 pull-right btn-group" role="group" aria-label="...">
+        <button 
+            type="button" 
+            class="btn btn-default" 
+            ng-disabled="!currentPage" 
+            ng-click="gotoPage(0)"
+        >
+            First
+        </button>
+        <button 
+            type="button" 
+            class="btn btn-default" 
+            ng-disabled="!currentPage"
+            ng-click="gotoPage(currentPage-1)"
+        >
+            Prev
+        </button>
+        <button 
+            class="btn btn-default" 
+            ng-class="{'active':pageNbr===currentPage+1}"
+            ng-repeat="pageNbr in pageNbrs" 
+            ng-click="gotoPage(pageNbr-1)"
+        >
+            {{pageNbr}}
+        </button>
+        <button 
+            type="button" 
+            class="btn btn-default" 
+            ng-disabled="isDisable"
+            ng-click="gotoPage(currentPage+1)"
+        >
+            Next
+        </button>
+        <button 
+            type="button" 
+            class="btn btn-default" 
+            ng-disabled="isDisable" 
+            ng-click="gotoPage(totalPages-1)"
+        >
+            Last
+        </button>
+    </div>
+</div>

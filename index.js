@@ -5,7 +5,9 @@ const app = express();
 const port = 4400;
 const Datastore = require('nedb');
 const { O_CREAT } = require('constants');
-let userDataCount=0;
+let dataCount=0;
+let pageCount;
+let size=10;
 const user = new Datastore({ filename: 'collections/user.db', autoload: true });
 const session = new Datastore({ filename: 'collections/session.db', autoload: true });
 const todo = new Datastore({ filename: 'collections/todo.db', autoload: true });
@@ -20,7 +22,9 @@ user.find({username:"admin"},function(err,docs){
     }
 })
 user.find({},function(err,docs){
-    userDataCount = docs.length;
+    dataCount = docs.length;
+    pageCount=(Math.ceil(dataCount / size));   
+    
 })
 app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, 'public')))
@@ -72,32 +76,24 @@ app.put('/api/auth/logout', (req, res) => {
 })
 // User Management
 app.get('/user', myLogger, (req, res) => {
-    // {
-    //     data: null,
-    //     dataitems: [{},{},{}...],
-    //     errors: [],
-    //     warnings: [],
-    //     pagination: {
-    //         size: 10,
-    //         page: 1,
-    //          pageCount:15 
-    //         total: 150,
-    //     },
-    //     success: false,
-    // }
-    // pageCount = totalCount / pageSize + ((totalCount % pagesize)>0?1:0)
-    // 150/10=15+0
-    // console.log('user database length is' + user.count);
     const reqQueryObject = req.query // returns object with all parameters
-    const toSkip = req.query.pageNbr // returns "12354411"
-    console.log('to skip ='+ toSkip);
+    let toSkip = req.query.pageNbr // returns "12354411"
+    toskip=toSkip*10;
     user.find({}).skip(toSkip).limit(10).exec(function(err,docs) {
-        if (err) {
-            res.json({ msg: 'Internal Server Error' }, 500);
-        }
-        else {
-            res.json({docs,userDataCount},200);   
-        }
+        res.json
+        (
+            {
+            data:docs, 
+            error:[err],
+            pagination: { 
+                size:size, 
+                page:1,
+                dataCount:dataCount, 
+                pagecount :pageCount 
+            }
+            },
+            200
+        );
     });
 })
 app.get('/user/:id', myLogger, (req, res) => {
