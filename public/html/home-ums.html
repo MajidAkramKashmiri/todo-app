@@ -1,26 +1,16 @@
-<section ng-controller="crudController">
-    <div ng-include="'html/nav.html'">
-    </div>
-    <br>
-    <br>
+<section ng-controller="UserController">
+    <div ng-include="'html/nav.html'"></div>
+    <br><br>
     <div style="margin:20px" class="panel panel-default">
         <div class="panel-heading clearfix">
             <h4 class="pull-left">User List</h4>
-            <button type="button" class=" pull-right btn btn-primary " ng-click="open(data, 'CREATE')">
+            <button type="button" class=" pull-right btn btn-primary" ng-click="open(data, 'CREATE')">
                 Create User
             </button>
         </div>
         <div class="panel-body">
-            <datatable definition="userDefinition" dataservice="UserService" refreshsignal="refreshDataTable"
-                pagenumber="pagenumber">
+            <datatable definition="userDefinition" dataservice="UserService" refreshsignal="refreshDataTable">
             </datatable>
         </div>
-        <div class="btn-group pull-right" role="group" aria-label="...">
-            <button type="button" class="btn btn-default" ng-disabled="!pagenumber" ng-click="first()">First</button>
-            <button type="button" class="btn btn-default" ng-disabled="!pagenumber" ng-click="previous()">Prev</button>
-            <button type="button" class="btn btn-default" ng-disabled="!isDisabled" ng-click="next()">Next</button>
-            <button type="button" class="btn btn-default" ng-disabled="!isDisabled" ng-click="last()">Last</button>
-        </div>
     </div>
-
 </section>

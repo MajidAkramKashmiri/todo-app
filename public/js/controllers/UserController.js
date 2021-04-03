@@ -1,6 +1,6 @@
-app.controller("crudController", function ($scope, $http,$uibModal,UserService) {
+app.controller("UserController", function ($scope, $http,$uibModal,UserService) {
     $scope.refreshDataTable=0;
-    $scope.pagenumber=0; 
+    $scope.currentPage=0; 
     $scope.isDisabled=1;
     $scope.userManagement = function () {
         document.location.hash = "#!/home-ums"
@@ -18,11 +18,6 @@ app.controller("crudController", function ($scope, $http,$uibModal,UserService) 
         phone: "",
         address: ""
     }
-    $scope.totalUserCount;
-    UserService.get()
-                .then(response=>{
-                    $scope.totalUserCount = response.userDataCount;
-                })
     $scope.userDefinition = [
         {
             dataType:'userAvatar',
@@ -89,7 +84,7 @@ app.controller("crudController", function ($scope, $http,$uibModal,UserService) 
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
             templateUrl: "html/createUserModal.html",
-            controller: "CreateUserController",
+            controller: "CreateModal",
             resolve: {
                 user: function () {
                     return user;
@@ -125,53 +120,49 @@ app.controller("crudController", function ($scope, $http,$uibModal,UserService) 
             .then(response=>{       
             })
     }
-    $scope.next=function(){
-        $scope.pagenumber = $scope.pagenumber + 10;
-        console.log($scope.pagenumber);
-        UserService.get($scope.pagenumber)
-            .then(response=>{
-                //console.log(response)
-                if($scope.pagenumber>=(response.userDataCount-(response.userDataCount%10)))
-                {
-                    $scope.refreshDataTable++; 
-                    $scope.isDisabled=0; 
-                    //$scope.pagenumber = $scope.pagenumber - 10; 
-
-                  
-                }
-                else {
-                    $scope.isDisabled=1;
-                    $scope.refreshDataTable++;
-                }
-            })
-    }
-    $scope.previous=function(){
+    // $scope.next=function(){
+    //     $scope.pagenumber = $scope.pagenumber + 10;
+    //     console.log($scope.pagenumber);
+    //     UserService.get($scope.pagenumber)
+    //         .then(response=>{
+    //             if($scope.pagenumber>=(response.userDataCount-(response.userDataCount%10)))
+    //             {
+    //                 $scope.refreshDataTable++; 
+    //                 $scope.isDisabled=0; 
+    //             }
+    //             else {
+    //                 $scope.isDisabled=1;
+    //                 $scope.refreshDataTable++;
+    //             }
+    //         })
+    // }
+    // $scope.previous=function(){
         
-        if  ($scope.pagenumber > 0)  {
-            $scope.isDisabled=1;
-            $scope.pagenumber = $scope.pagenumber - 10;
-            console.log($scope.pagenumber);
-            UserService.get($scope.pagenumber)
-                .then(response=>{
-                    $scope.refreshDataTable++;
-                })
-        }
-    }
-    $scope.first=function(){
-        $scope.pagenumber = 0;
-        $scope.isDisabled=1;
-        UserService.get($scope.pagenumber)
-            .then(response=>{
-               $scope.refreshDataTable++;
-            })
-    }
-    $scope.last=function(){
-        $scope.pagenumber = $scope.totalUserCount-($scope.totalUserCount%10);
-        console.log($scope.pagenumber);
-        UserService.get($scope.pagenumber)
-            .then(response=>{
-            $scope.refreshDataTable++;
-            $scope.isDisabled=0;
-            })
-    }
+    //     if  ($scope.pagenumber > 0)  {
+    //         $scope.isDisabled=1;
+    //         $scope.pagenumber = $scope.pagenumber - 10;
+    //       //  console.log($scope.pagenumber);
+    //         UserService.get($scope.pagenumber)
+    //             .then(response=>{
+    //                 $scope.refreshDataTable++;
+    //             })
+    //     }
+    // }
+    // $scope.first=function(){
+    //     $scope.pagenumber = 0;
+    //     $scope.isDisabled=1;
+    //     UserService.get($scope.pagenumber)
+    //         .then(response=>{
+    //            $scope.refreshDataTable++;
+    //         })
+    // }
+    // $scope.last=function(){
+    //     $scope.pagenumber = $scope.totalUserCount-($scope.totalUserCount%10);
+    //     //console.log($scope.pagenumber);
+    //     UserService.get($scope.pagenumber)
+    //         .then(response=>{
+    //         $scope.refreshDataTable++;
+    //         $scope.isDisabled=0;
+    //         })
+    // }
 });

@@ -1,46 +1,51 @@
 <!DOCTYPE html>
-<html ng-app = "myApp">
-    <head lang = "en"   >
-        <meta charset = "UTF-8" >
-        <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
-        <meta name = "viewport" content = "width=device-width, initial-scale=1">
-        <!-- files css -->
-        <link rel="stylesheet" href="css/css-files/user-avatar.css" type="text/css" >
-        <!-- vendor js -->
-        <script type = "text/javascript" src = "js/vendor/angular.js"> </script>
-        <script type = "text/javascript" src = "js/vendor/routing.js"> </script>
-        <script type = "text/javascript" src = "js/vendor/ui-bootstrap-tpls-2.5.0.min.js"></script>
-        <!--  route js -->
-        <script type = "text/javascript" src = "js/route.js"> </script>
-        <!-- controller js -->
-        <script type = "text/javascript" src = "js/controllers/home-user.js"> </script>
-        <script type = "text/javascript" src = "js/controllers/home-ums.js"> </script>
-        <script type = "text/javascript" src = "js/controllers/home-todo.js"> </script>
-        <script type = "text/javascript" src = "js/controllers/nav-controller.js"> </script>
-        <script type = "text/javascript" src = "js/controllers/home-ums-modal.js"> </script>
-        <script type = "text/javascript" src = "js/controllers/home-ums-edit-modal.js"> </script>
-        <script type = "text/javascript" src = "js/controllers/home-ums-view-modal.js"> </script>
-        <script type = "text/javascript" src = "js/controllers/home-todo-modal.js"> </script>
-        <script type = "text/javascript" src = "js/controllers/user-avatar-controller.js"> </script>
-        <!-- service js -->
-        <script type = "text/javascript" src = "js/services/user-service.js"> </script>
-        <script type = "text/javascript" src = "js/services/login-auth-service.js"> </script>
-        <script type = "text/javascript" src = "js/services/todo-list-service.js"> </script>
-        <!-- filters js -->
-        <script type = "text/javascript" src = "js/filters/truncate.js"> </script>
-        <!-- components -->
-        <script type = "text/javascript" src = "js/components/user-avatar.js"> </script>
-        <!-- vendor css -->
-        <link rel="stylesheet" href="css/vendor/bootstrap.css" type="text/css" >
-        <link rel="stylesheet" href="css/vendor/bootstrap-theme.css" type="text/css" >
+<html ng-app="myApp">
 
-        <!-- <link rel="stylesheet" href="fonts/glyphicons-halflings-regular.eot" type="text/css" >
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- files css -->
+    <link rel="stylesheet" href="css/css-files/user-avatar.css" type="text/css">
+    <!-- vendor js -->
+    <script type="text/javascript" src="js/vendor/angular.js"> </script>
+    <script type="text/javascript" src="js/vendor/routing.js"> </script>
+    <script type="text/javascript" src="js/vendor/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <!--  route js -->
+    <script type="text/javascript" src="js/route.js"> </script>
+    <!-- controller js -->
+    <script type="text/javascript" src="js/controllers/homeController.js"> </script>
+    <script type="text/javascript" src="js/controllers/UserController.js"> </script>
+    <script type="text/javascript" src="js/controllers/todocontroller.js"> </script>
+    <script type="text/javascript" src="js/controllers/nav-controller.js"> </script>
+    <script type="text/javascript" src="js/controllers/CreateModal.js"> </script>
+    <!-- <script type="text/javascript" src="js/controllers/home-ums-edit-modal.js"> </script> -->
+    <!-- <script type="text/javascript" src="js/controllers/home-ums-view-modal.js"> </script> -->
+    <script type="text/javascript" src="js/controllers/CreateTodoListController.js"> </script>
+    <script type="text/javascript" src="js/controllers/user-avatar-controller.js"> </script>
+    <script type="text/javascript" src="js/controllers/DataTableController.js"> </script>
+    <!-- service js -->
+    <script type="text/javascript" src="js/services/user-service.js"> </script>
+    <script type="text/javascript" src="js/services/login-auth-service.js"> </script>
+    <script type="text/javascript" src="js/services/todo-list-service.js"> </script>
+    <!-- filters js -->
+    <script type="text/javascript" src="js/filters/truncate.js"> </script>
+    <!-- components -->
+    <script type="text/javascript" src="js/components/user-avatar.js"> </script>
+    <script type="text/javascript" src="js/components/data-table.js"> </script>
+    <!-- vendor css -->
+    <link rel="stylesheet" href="css/vendor/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="css/vendor/bootstrap-theme.css" type="text/css">
+
+    <!-- <link rel="stylesheet" href="fonts/glyphicons-halflings-regular.eot" type="text/css" >
         <link rel="stylesheet" href="fonts/glyphicons-halflings-regular.svg" type="text/css" >
         <link rel="stylesheet" href="fonts/glyphicons-halflings-regular.ttf" type="text/css" >
         <link rel="stylesheet" href="fonts/glyphicons-halflings-regular.woff" type="text/css" >
         <link rel="stylesheet" href="fonts/glyphicons-halflings-regular.woff2" type="text/css" > -->
-    </head>
-    <body >
-        <div ng-view> </div>
-    </body>
+</head>
+
+<body>
+    <div ng-view> </div>
+</body>
+
 </html>

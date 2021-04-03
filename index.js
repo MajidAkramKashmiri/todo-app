@@ -75,25 +75,59 @@ app.put('/api/auth/logout', (req, res) => {
     res.send('Authentication Logout')
 })
 // User Management
-app.get('/user', myLogger, (req, res) => {
-    const reqQueryObject = req.query // returns object with all parameters
-    let toSkip = req.query.pageNbr // returns "12354411"
-    toskip=toSkip*10;
-    user.find({}).skip(toSkip).limit(10).exec(function(err,docs) {
-        res.json
-        (
-            {
-            data:docs, 
-            error:[err],
-            pagination: { 
-                size:size, 
-                page:1,
-                dataCount:dataCount, 
-                pagecount :pageCount 
-            }
-            },
-            200
-        );
+// app.get('/user', myLogger, (req, res) => {
+//     const reqQueryObject = req.query // returns object with all parameters
+//     let toSkip = req.query.pageNbr // returns "12354411"
+//     toskip=toSkip*10;
+//     user.find({}).skip(toSkip).limit(10).exec(function(err,docs) {
+//         res.json
+//         (
+//             {
+//             data:docs, 
+//             error:[err],
+//             pagination: { 
+//                 size:size, 
+//                 page:1,
+//                 dataCount:dataCount, 
+//                 pagecount :pageCount 
+//             }
+//             },
+//             200
+//         );
+//     });
+// })
+app.get('/user', myLogger, (req, res) =>{
+    user.count({}, function (err,total) {
+        const pageNbr = req.query.pageNbr;
+        console.log('page number is'+pageNbr);
+        const pageSize = 10;
+        const recordStart = (pageNbr - 1) * pageSize;
+        console.log('record start is'+recordStart);
+        const pages=Math.floor(total / pageSize) + ((total % pageSize) ? 1 : 0);
+        
+        user.find({})
+            .skip(recordStart)
+            .limit(pageSize)
+            .exec(function(err,docs) {
+                if (err) {
+                    console.log(err);
+                    res.json({ msg:'Interval Server Error' }, 500);
+                }
+                else {
+                    res.json(
+                        {
+                            dataitems: docs,
+                                pagination: {
+                                    recordStart: recordStart + 1,
+                                    recordEnd: recordStart + pageSize,
+                                    size: pageSize,
+                                    total: total,
+                                    pages: pages,
+                                },
+                        }
+                    )
+                }
+            });
     });
 })
 app.get('/user/:id', myLogger, (req, res) => {

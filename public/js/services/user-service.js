@@ -5,13 +5,14 @@ app.service('UserService', function($http) {
             url: '/user?pageNbr='+pageNbr,
             headers : { token: localStorage.getItem('token') }
         }) 
-            .then(function successCallback (response) {
-                console.log(response);
-                return response.data;
+            .then(
+                function successCallback (response) {
+                    console.log(response.data);
+                    return response.data
                 },
                 function errorCallback (response) {
                     return response.data;
-                }
+                }   
             );
     }
     this.getById = function(id) {
