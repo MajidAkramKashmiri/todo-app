@@ -3,5 +3,5 @@ app.component('userAvatar', {
         user: '<'
     },
     templateUrl: 'html/user-avatar.html',
-    controller: 'userAvatarController'
+    controller: 'UserAvatarController'
 })

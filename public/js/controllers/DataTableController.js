@@ -29,7 +29,7 @@ app.controller('DataTableController', function($scope, $uibModal) {
                     {
                         if ( $scope.currentPage == 0 )
                         {                             
-                            $scope.isDisabled=0;
+                            $scope.isDisable=0;
                             $scope.pageNbrs.splice(0, $scope.pageNbrs.length, $scope.currentPage+1, $scope.currentPage + 2);
                         }
                     }

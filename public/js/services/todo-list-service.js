@@ -8,7 +8,9 @@ app.service('todoListService', function($http) {
         })
         .then(
             function successCallback (response) {
-               return response.data;
+                console.log("data coming from the todo list is ");
+                console.log(response.data);
+                return response.data;
             },
             function errorCallback (response) {
                return response.data;

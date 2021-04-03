@@ -117,13 +117,13 @@ app.get('/user', myLogger, (req, res) =>{
                     res.json(
                         {
                             dataitems: docs,
-                                pagination: {
-                                    recordStart: recordStart + 1,
-                                    recordEnd: recordStart + pageSize,
-                                    size: pageSize,
-                                    total: total,
-                                    pages: pages,
-                                },
+                            pagination: {
+                                recordStart: recordStart + 1,
+                                recordEnd: recordStart + pageSize,
+                                size: pageSize,
+                                total: total,
+                                pages: pages,
+                            },
                         }
                     )
                 }

@@ -1,19 +1,23 @@
-app.controller("CreateUserController", function ($scope, $uibModalInstance, $http, user, action, UserService) {
-    $scope.userdata = user;
+app.controller("CreateTodoListController", function ($scope, $uibModalInstance, $http, list, action, todoListService,) {
+    console.log(list);
+    console.log(action);
+    $scope.list = list;
+    $scope.priorities=["high","medium","low"];
     $scope.action = action;
-    $scope.toAddUser = function() {
-        if ($scope.userdata._id) {
-            UserService.update($scope.userdata._id, $scope.userdata)
+    $scope.toAddTodo = function() {
+        if ($scope.list._id) {
+            todoListService.update($scope.list._id, $scope.list)
                 .then(response=> {
                     $uibModalInstance.close();
                 });
         }
         else {
-            UserService.create($scope.userdata)
+            todoListService.create($scope.list)
                 .then(response=> {
                     $uibModalInstance.close();
                 });  
         }
+        
     }
     $scope.ok = function () {
         $uibModalInstance.close();

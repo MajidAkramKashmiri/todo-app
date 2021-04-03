@@ -1,18 +1,25 @@
-<div ng-controller="todocontroller">
-    <div ng-include="'html/nav.html'">
-    </div>
+<div ng-controller="TodoController">
+    <div ng-include="'html/nav.html'"></div>
     <div class="container">
         <br>
         <br>
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <h4 class="pull-left">Todo List</h4>
-                <button type="button" class=" pull-right btn btn-primary " ng-click="open(list, 'CREATE')">
+                <button 
+                    type="button" 
+                    class="pull-right btn btn-primary" 
+                    ng-click="open(list, 'CREATE')"
+                >
                     Create
                 </button>
             </div>
             <div class="panel-body">
-                <datatable definition="ListDefinition" dataservice="Service" refreshsignal="refreshDataTable">
+                <datatable 
+                    definition="ListDefinition" 
+                    dataservice="Service" 
+                    refreshsignal="refreshDataTable"
+                >
                 </datatable>
             </div>
         </div>

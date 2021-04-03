@@ -23,7 +23,7 @@ app.controller('loginController', function($scope,$http,loginService) {
         let password = $scope.Password;
         loginService.post(username,password)
             .then(response=>{
-                $scope.usrData=response;
+                $scope.usrData = response;
             }) 
     }
 })

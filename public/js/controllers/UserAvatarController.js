@@ -1,4 +1,4 @@
-app.controller('userAvatarController', function() {
+app.controller('UserAvatarController', function() {
     var $ctrl = this;
     $ctrl.$onInit = function() {
         $ctrl.initials = $ctrl.user.firstName.charAt(0) + $ctrl.user.lastName.charAt(0);

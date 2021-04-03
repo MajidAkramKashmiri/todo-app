@@ -1,5 +1,5 @@
-app.controller("todocontroller", function ($scope, $http, $uibModal, todoListService) {
-    $scope.refreshDataTable=0; 
+app.controller("TodoController", function ($scope, $http, $uibModal, todoListService) {
+    $scope.refreshDataTable = 0; 
     $scope.userManagement = function () {
         document.location.hash = "#!/home-ums"
     }

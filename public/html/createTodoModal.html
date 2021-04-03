@@ -3,8 +3,10 @@
         type="button" 
         class="close" 
         ng-click="dismiss()" 
-        aria-label="Close"> <span>&times;</span>
-    </button> 
+        aria-label="Close"
+    > 
+        <span>&times;</span>
+    </button>
     <h4 class="modal-title">User List</h4>
 </div>
 <div class="modal-body">
@@ -17,9 +19,9 @@
                         <input 
                             type="text" 
                             class="form-control" 
-                            placeholder="Title"
+                            placeholder="Title" 
                             ng-readonly="action=='VIEW'"
-                            ng-model="list.title"
+                            ng-model="list.title" 
                             ng-required="true"
                         >
                     </div>
@@ -27,16 +29,14 @@
                 <div class="form-group">
                     <label for="Priority" class="col-md-4 control-label">Priority:</label>
                     <div class="col-md-8">
-                        <select  
+                        <select 
                             name="Set Priority" 
+                            class="form-control" 
                             ng-required="true" 
                             ng-readonly="action=='VIEW'"
-                            class="form-control" 
                             ng-model="list.priority"
+                            ng-options="x for x in priorities"
                         >
-                            <option value="high">High</option>
-                            <option value="medium">Medium</option>
-                            <option value="fiat">Low</option>
                         </select>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                         <input 
                             type="text" 
                             class="form-control" 
-                            placeholder="Description"
+                            placeholder="Description" 
                             ng-readonly="action=='VIEW'"
                             ng-model="list.description"
                         >
@@ -66,12 +66,11 @@
     </button>
     <button 
         type="button" 
-        class="btn btn-primary"  
-        ng-disabled="createTodo.$invalid"
+        class="btn btn-primary" 
+        ng-disabled="createTodo.$invalid" 
         ng-if="action!=='VIEW'"
-        ng-click="toAddTodo()" 
+        ng-click="toAddTodo()"
     >
         Save
     </button>
 </div>
-       
