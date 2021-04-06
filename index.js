@@ -156,22 +156,67 @@ app.delete('/user/:id', myLogger, (req, res) => {
         }
     );
 });
-// Todo routes
 app.get('/todo/:userId', myLogger, (req, res) => {
     console.log("Welcome")
     let userId = req.params.userId;
     console.log(userId);
-    todo.find({ userId }, function(err,docs) {
-        if (err) {
-            console.log("error");
-            res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
-        }
-        else {
-            console.log(docs);
-            res.json(docs,{ msg: 'List found successfully' }, 200);
-        }
+    todo.count({userId},function (err, total) {
+        const pageNbr = +req.query.pageNbr;
+        const pageSize = 10;
+        const recordStart = (pageNbr - 1) * pageSize;
+        const pages = Math.floor(total / pageSize) + ((total % pageSize) ? 1 : 0);
+        todo.find({userId})
+        .skip(recordStart)
+        .limit(pageSize)
+        .exec(function(err, docs) {
+            if (err) {
+                res.json({ msg: 'Internal Server Error' }, 500);
+            }
+            else {
+                const responseObj = {
+                    dataitems: docs,
+                    pagination: {
+                        recordStart: recordStart + 1,
+                        recordEnd: ((recordStart + pageSize)>total ? total : recordStart + pageSize),
+                        size: pageSize,
+                        page: pageNbr,
+                        total: total,
+                        pages: pages,
+                    },
+                }
+                res.json(responseObj, 200);
+            }
+            //, function(err,docs) {
+            // if (err) {
+            //     console.log("error");
+            //     res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
+            // }
+            // else {
+            //     console.log(docs);
+            //     res.json(docs,{ msg: 'List found successfully' }, 200);
+            // }
     });
 });
+})
+
+// Todo routes
+// app.get('/todo/:userId', myLogger, (req, res) => {
+//     console.log("Welcome")
+//     let userId = req.params.userId;
+//     console.log(userId);
+//     todo.find({ userId }, function(err,docs) {
+//         if (err) {
+//             console.log("error");
+//             res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
+//         }
+//         else {
+//             console.log(docs);
+//             res.json(docs,{ msg: 'List found successfully' }, 200);
+//         }
+//     });
+// });
+
+
 app.get('/todo/:userId/:id', myLogger, (req, res) => {
     let _id = req.params.id;
     todo.find({ _id }, function(err,docs) {

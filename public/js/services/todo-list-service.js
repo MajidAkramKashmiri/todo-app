@@ -1,9 +1,9 @@
 app.service('todoListService', function($http) {
     var loginData = JSON.parse(localStorage.loginData);
-    this.get = function() {
+    this.get = function(pageNbr=1) {
         return $http({
             method: 'GET',
-            url: '/todo/' + loginData.user.userId,
+            url: '/todo/' + loginData.user.userId + '?pageNbr='+pageNbr ,
             headers: { token: localStorage.getItem('token') }
         })
         .then(
