@@ -74,28 +74,6 @@ app.post('/api/auth/login', (req, res) => {
 app.put('/api/auth/logout', (req, res) => {
     res.send('Authentication Logout')
 })
-// User Management
-// app.get('/user', myLogger, (req, res) => {
-//     const reqQueryObject = req.query // returns object with all parameters
-//     let toSkip = req.query.pageNbr // returns "12354411"
-//     toskip=toSkip*10;
-//     user.find({}).skip(toSkip).limit(10).exec(function(err,docs) {
-//         res.json
-//         (
-//             {
-//             data:docs,
-//             error:[err],
-//             pagination: {
-//                 size:size,
-//                 page:1,
-//                 dataCount:dataCount,
-//                 pagecount :pageCount
-//             }
-//             },
-//             200
-//         );
-//     });
-// })
 app.get('/user', myLogger, (req, res) => {
     user.count({}, function (err, total) {
         const pageNbr = +req.query.pageNbr;
