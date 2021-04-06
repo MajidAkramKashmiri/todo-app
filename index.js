@@ -21,6 +21,11 @@ user.find({username:"admin"},function(err,docs){
         )
     }
 })
+session.find({token:"qzGymbfqsPFTBTU"},function(err,docs){
+    if(docs.length){
+        console.log(docs);
+    }
+})
 user.find({},function(err,docs){
     dataCount = docs.length;
     pageCount=(Math.ceil(dataCount / size));
@@ -56,7 +61,7 @@ app.post('/api/auth/login', (req, res) => {
         if (docs.length) {
             console.log(docs);
             const token = makeid(15);
-            session.insert([{ userId: docs[0]._id, token: token }], function (err, newDocs) {
+            session.insert([{ userId: docs[0]._id, token: token,loginAt:Date.now()}], function (err, newDocs) {
                 if (err) {
                     res.json({ user: null, token: null, msg: 'Internal Server Error' }, 500);
                 }
@@ -72,7 +77,16 @@ app.post('/api/auth/login', (req, res) => {
     })
 })
 app.put('/api/auth/logout', (req, res) => {
-    res.send('Authentication Logout')
+    session.find({token:req.body.token}, function(err,docs){
+        if(docs.length){
+            session.update({token:req.body.token}, { $set: { "loggedOut":Date.now()} }, {}, function () { 
+                res.json({docs},200)
+            }) 
+        }
+        else {
+            res.json({msg:"token not found"});
+        }
+    })
 })
 app.get('/user', myLogger, (req, res) => {
     user.count({}, function (err, total) {
