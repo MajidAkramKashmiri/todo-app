@@ -40,7 +40,7 @@
 <div class="clearfix">
     <div class="pull-left">
         <h5>
-            Showing {{ pagination.recordStart }} to {{ pagination.recordEnd }} of {{ pagination.total }} entries
+            Showing {{ pagination.recordStart }} to {{ pagination.recordEnd > pagination.total ? pagination.total : pagination.recordEnd }} of {{ pagination.total }} entries
         </h5>
     </div>
     <div  class="pull-right btn-group" role="group">
