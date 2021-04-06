@@ -2,10 +2,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th
-                ng-repeat="def in $ctrl.definition"
-                ng-class="def.headerCssClass"
-            >
+            <th ng-repeat="def in $ctrl.definition" ng-class="def.headerCssClass">
                 {{ def.label }}
             </th>
         </tr>
@@ -21,12 +18,8 @@
                         <user-avatar user="item"></user-avatar>
                     </span>
                     <span ng-switch-when="button">
-                        <button
-                            type="button"
-                            class="btn btn-success"
-                            ng-class="def.actionCssClass"
-                            ng-click="def.action(item, $index)"
-                        >
+                        <button type="button" class="btn btn-success" ng-class="def.actionCssClass"
+                            ng-click="def.action(item, $index)">
                             {{def.actionLabel}}
                         </button>
                     </span>
@@ -40,48 +33,26 @@
 <div class="clearfix">
     <div class="pull-left">
         <h5>
-            Showing {{ pagination.recordStart }} to {{ pagination.recordEnd > pagination.total ? pagination.total : pagination.recordEnd }} of {{ pagination.total }} entries
+            Showing {{ pagination.recordStart }} to {{ pagination.recordEnd }} of {{ pagination.total }} entries
         </h5>
     </div>
-    <div  class="pull-right btn-group" role="group">
-        <button
-            type="button"
-            class="btn btn-default"
-            ng-disabled="currentPage === 1"
-            ng-click="gotoFirstPage()"
-        >
+    <div class="pull-right btn-group" role="group">
+        <button type="button" class="btn btn-default" ng-disabled="currentPage === 1" ng-click="gotoFirstPage()">
             First
         </button>
-        <button
-            type="button"
-            class="btn btn-default"
-            ng-disabled="currentPage === 1"
-            ng-click="gotoPrevPage()"
-        >
+        <button type="button" class="btn btn-default" ng-disabled="currentPage === 1" ng-click="gotoPrevPage()">
             Prev
         </button>
-        <button
-            class="btn btn-default"
-            ng-class="{ 'active': (pageNbr === currentPage) }"
-            ng-repeat="pageNbr in pageNbrs"
-            ng-click="gotoPage(pageNbr)"
-        >
+        <button class="btn btn-default" ng-class="{ 'active': (pageNbr === currentPage) }"
+            ng-repeat="pageNbr in pageNbrs" ng-click="gotoPage(pageNbr)">
             {{ pageNbr }}
         </button>
-        <button
-            type="button"
-            class="btn btn-default"
-            ng-disabled="currentPage === pagination.pages"
-            ng-click="gotoNextPage()"
-        >
+        <button type="button" class="btn btn-default" ng-disabled="currentPage === pagination.pages"
+            ng-click="gotoNextPage()">
             Next
         </button>
-        <button
-            type="button"
-            class="btn btn-default"
-            ng-disabled="currentPage === pagination.pages"
-            ng-click="gotoLastPage()"
-        >
+        <button type="button" class="btn btn-default" ng-disabled="currentPage === pagination.pages"
+            ng-click="gotoLastPage()">
             Last
         </button>
     </div>

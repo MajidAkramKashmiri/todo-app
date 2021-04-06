@@ -92,7 +92,7 @@ app.get('/user', myLogger, (req, res) => {
                         dataitems: docs,
                         pagination: {
                             recordStart: recordStart + 1,
-                            recordEnd: recordStart + pageSize,
+                            recordEnd: ((recordStart + pageSize)>total ? total : recordStart + pageSize),
                             size: pageSize,
                             page: pageNbr,
                             total: total,
