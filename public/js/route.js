@@ -1,7 +1,7 @@
 var app = angular.module("myApp", ["ngRoute","ui.bootstrap"]);
 app.config(function ($routeProvider) {
     $routeProvider.when("/", {
-        template : "Root"
+        templateUrl : "html/auth-login.html"
     });
     $routeProvider.when("/auth-login", {
         templateUrl : "html/auth-login.html"
