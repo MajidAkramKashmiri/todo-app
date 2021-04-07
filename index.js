@@ -5,9 +5,9 @@ const app = express();
 const port = 4400;
 const Datastore = require('nedb');
 const { O_CREAT } = require('constants');
-let dataCount=0;
+let dataCount = 0;
 let pageCount;
-let size=10;
+let size = 10;
 const user = new Datastore({ filename: 'collections/user.db', autoload: true });
 const session = new Datastore({ filename: 'collections/session.db', autoload: true });
 const todo = new Datastore({ filename: 'collections/todo.db', autoload: true });
@@ -18,11 +18,6 @@ user.find({username:"admin"}, function(err, docs){
             { username:"admin",  password:"admin", firstName:"administrator", lastName:"", email:"", phone:"", address:"" },
             function(err, docs) {}
         )
-    }
-})
-session.find({token:"qzGymbfqsPFTBTU"}, function(err, docs){
-    if(docs.length){
-        console.log(docs);
     }
 })
 user.find({}, function(err, docs){
