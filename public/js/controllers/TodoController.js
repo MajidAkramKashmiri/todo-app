@@ -31,13 +31,12 @@ app.controller("TodoController", function ($scope, $http, $uibModal, todoListSer
         {
             label:'Description',
             dataType:'text',
-            data:(item)=>{
-                
+            data: (item)=>{
                 return item.description  
             }
         },
         {   
-            label:'',
+            label: '',
             dataType: 'button',
             action: (item, index) => 
                 {
@@ -47,10 +46,10 @@ app.controller("TodoController", function ($scope, $http, $uibModal, todoListSer
             actionCssClass:'btn btn-success'    
         },
         {   
-            label:'',
+            label: '',
             dataType: 'button',
             action: (item, index) => { 
-               return  $scope.open(item,'EDIT'); 
+               return  $scope.open(item, 'EDIT'); 
             },
             actionLabel:'Edit',
             actionCssClass:'btn btn-warning'
@@ -111,13 +110,13 @@ app.controller("TodoController", function ($scope, $http, $uibModal, todoListSer
         $scope.list.title = $scope.todoListData[index].title;
         $scope.list.description = $scope.todoListData[index].description;
         $scope.updateTodo = function () {
-            todoListService.update(id,$scope.list)
+            todoListService.update(id, $scope.list)
                 .then(response=>{
                     console.log("List updated successfully");
                 })
             todoListService.get()
                 .then(response=>{
-                    $scope.todoListData=response;
+                    $scope.todoListData = response;
                 })  
         }
     }
@@ -128,7 +127,7 @@ app.controller("TodoController", function ($scope, $http, $uibModal, todoListSer
             )
         todoListService.get()
             .then(response=>{
-                $scope.todoListData=response;
+                $scope.todoListData = response;
             })
     }
 });

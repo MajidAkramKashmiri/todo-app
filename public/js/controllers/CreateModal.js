@@ -7,15 +7,12 @@ app.controller("CreateModal", function ($scope, $uibModalInstance, $http, user, 
                 .then(response=> {
                     $uibModalInstance.close();
                 });
-
         }
         else {
             UserService.create($scope.userdata)
                 .then(response=> {
-                    
                     $uibModalInstance.close();
                 }); 
-           
         }
     }
     $scope.ok = function () {

@@ -1,5 +1,5 @@
 app.service('UserService', function($http) {
-    this.get = function(pageNbr=1) {
+    this.get = function(pageNbr = 1) {
         return  $http({
             method: 'GET',
             url: '/user?pageNbr='+pageNbr,
@@ -7,7 +7,6 @@ app.service('UserService', function($http) {
         }) 
             .then(
                 function successCallback (response) {
-                    console.log(response.data);
                     return response.data
                 },
                 function errorCallback (response) {
@@ -37,7 +36,6 @@ app.service('UserService', function($http) {
             headers: { token: localStorage.getItem('token') }
         })
             .then(function successCallback (response) {
-                console.log(response.data);
                 return response.data;    
                 },
                 function errorCallback (response) {

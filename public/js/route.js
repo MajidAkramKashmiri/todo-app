@@ -21,7 +21,7 @@ app.controller('loginController', function($scope,$http,loginService) {
     $scope.checkLogin = function() {
         let username = $scope.Username;
         let password = $scope.Password;
-        loginService.post(username,password)
+        loginService.post(username, password)
             .then(response=>{
                 $scope.usrData = response;
             })

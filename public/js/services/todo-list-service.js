@@ -8,12 +8,10 @@ app.service('todoListService', function($http) {
         })
         .then(
             function successCallback (response) {
-                console.log("data coming from the todo list is ");
-                console.log(response.data);
                 return response.data;
             },
             function errorCallback (response) {
-               return response.data;
+                return response.data;
             }
         );
     }

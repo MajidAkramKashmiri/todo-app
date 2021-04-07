@@ -1,8 +1,6 @@
 app.controller("CreateTodoListController", function ($scope, $uibModalInstance, $http, list, action, todoListService,) {
-    console.log(list);
-    console.log(action);
     $scope.list = list;
-    $scope.priorities=["high","medium","low"];
+    $scope.priorities = ["high", "medium", "low"];
     $scope.action = action;
     $scope.toAddTodo = function() {
         if ($scope.list._id) {
